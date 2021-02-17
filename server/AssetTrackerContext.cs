@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace server
+namespace Server
 {
     public class AssetTrackerContext : DbContext
     {

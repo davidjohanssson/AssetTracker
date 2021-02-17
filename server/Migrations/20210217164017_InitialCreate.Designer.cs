@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using server;
+using Server;
 
-namespace server.Migrations
+namespace Server.Migrations
 {
     [DbContext(typeof(AssetTrackerContext))]
     [Migration("20210217164017_InitialCreate")]

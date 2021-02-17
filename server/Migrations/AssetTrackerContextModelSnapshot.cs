@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using server;
+using Server;
 
-namespace server.Migrations
+namespace Server.Migrations
 {
     [DbContext(typeof(AssetTrackerContext))]
     partial class AssetTrackerContextModelSnapshot : ModelSnapshot
