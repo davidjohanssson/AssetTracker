@@ -5,8 +5,8 @@ namespace Server
 {
     public interface ICurrencyService
     {
-        Task<List<Currency>> GetManyCurrencies();
-        Task<Currency> GetCurrency(int id);
-        Task<List<Currency>> AddCurrency(AddCurrencyDto addCurrencyDto);
+        Task<List<Currency>> GetMany();
+        Task<Currency> Get(int id);
+        Task<List<Currency>> Create(CreateCurrencyDto dto);
     }
 }

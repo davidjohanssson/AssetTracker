@@ -1,6 +1,6 @@
 namespace Server
 {
-    public class AddCurrencyDto
+    public class CreateCurrencyDto
     {
         public string Name { get; set; }
         public double ExchangeRateRelativeToDollar { get; set; }

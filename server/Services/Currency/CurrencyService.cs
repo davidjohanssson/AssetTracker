@@ -11,21 +11,21 @@ namespace Server
             new Currency { Id = 2, Name = "RUB", ExchangeRateRelativeToDollar = 18.12 },
         };
 
-        public async Task<Currency> GetCurrency(int id)
-        {
-            return currencies.FirstOrDefault(currency => currency.Id == id);
-        }
-
-        public async Task<List<Currency>> GetManyCurrencies()
+        public async Task<List<Currency>> GetMany()
         {
             return currencies;
         }
 
-        public async Task<List<Currency>> AddCurrency(AddCurrencyDto addCurrencyDto)
+        public async Task<Currency> Get(int id)
+        {
+            return currencies.FirstOrDefault(currency => currency.Id == id);
+        }
+
+        public async Task<List<Currency>> Create(CreateCurrencyDto dto)
         {
             var currency = new Currency();
-            currency.Name = addCurrencyDto.Name;
-            currency.ExchangeRateRelativeToDollar = addCurrencyDto.ExchangeRateRelativeToDollar;
+            currency.Name = dto.Name;
+            currency.ExchangeRateRelativeToDollar = dto.ExchangeRateRelativeToDollar;
 
             currencies.Add(currency);
             return currencies;
