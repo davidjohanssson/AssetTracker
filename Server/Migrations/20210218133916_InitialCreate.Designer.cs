@@ -10,7 +10,7 @@ using Server;
 namespace Server.Migrations
 {
     [DbContext(typeof(AssetTrackerContext))]
-    [Migration("20210217164017_InitialCreate")]
+    [Migration("20210218133916_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,21 +21,15 @@ namespace Server.Migrations
                 .HasAnnotation("ProductVersion", "5.0.3")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("server.Asset", b =>
+            modelBuilder.Entity("Server.Asset", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Brand")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("FormFactorId")
+                    b.Property<int>("ModelId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Model")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("OfficeId")
                         .HasColumnType("int");
@@ -43,19 +37,31 @@ namespace Server.Migrations
                     b.Property<DateTime>("PurchaseDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<double>("PurchasePrice")
-                        .HasColumnType("float");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("FormFactorId");
+                    b.HasIndex("ModelId");
 
                     b.HasIndex("OfficeId");
 
                     b.ToTable("Assets");
                 });
 
-            modelBuilder.Entity("server.Currency", b =>
+            modelBuilder.Entity("Server.Brand", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Brands");
+                });
+
+            modelBuilder.Entity("Server.Currency", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -73,7 +79,7 @@ namespace Server.Migrations
                     b.ToTable("Currencies");
                 });
 
-            modelBuilder.Entity("server.FormFactor", b =>
+            modelBuilder.Entity("Server.FormFactor", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -88,7 +94,35 @@ namespace Server.Migrations
                     b.ToTable("FormFactors");
                 });
 
-            modelBuilder.Entity("server.Office", b =>
+            modelBuilder.Entity("Server.Model", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BrandId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FormFactorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BrandId");
+
+                    b.HasIndex("FormFactorId");
+
+                    b.ToTable("Models");
+                });
+
+            modelBuilder.Entity("Server.Office", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -108,28 +142,47 @@ namespace Server.Migrations
                     b.ToTable("Offices");
                 });
 
-            modelBuilder.Entity("server.Asset", b =>
+            modelBuilder.Entity("Server.Asset", b =>
                 {
-                    b.HasOne("server.FormFactor", "FormFactor")
+                    b.HasOne("Server.Model", "Model")
                         .WithMany("Assets")
-                        .HasForeignKey("FormFactorId")
+                        .HasForeignKey("ModelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("server.Office", "Office")
+                    b.HasOne("Server.Office", "Office")
                         .WithMany("Assets")
                         .HasForeignKey("OfficeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("FormFactor");
+                    b.Navigation("Model");
 
                     b.Navigation("Office");
                 });
 
-            modelBuilder.Entity("server.Office", b =>
+            modelBuilder.Entity("Server.Model", b =>
                 {
-                    b.HasOne("server.Currency", "Currency")
+                    b.HasOne("Server.Brand", "Brand")
+                        .WithMany("Models")
+                        .HasForeignKey("BrandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Server.FormFactor", "FormFactor")
+                        .WithMany("Models")
+                        .HasForeignKey("FormFactorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Brand");
+
+                    b.Navigation("FormFactor");
+                });
+
+            modelBuilder.Entity("Server.Office", b =>
+                {
+                    b.HasOne("Server.Currency", "Currency")
                         .WithMany("Offices")
                         .HasForeignKey("CurrencyId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -138,17 +191,27 @@ namespace Server.Migrations
                     b.Navigation("Currency");
                 });
 
-            modelBuilder.Entity("server.Currency", b =>
+            modelBuilder.Entity("Server.Brand", b =>
+                {
+                    b.Navigation("Models");
+                });
+
+            modelBuilder.Entity("Server.Currency", b =>
                 {
                     b.Navigation("Offices");
                 });
 
-            modelBuilder.Entity("server.FormFactor", b =>
+            modelBuilder.Entity("Server.FormFactor", b =>
+                {
+                    b.Navigation("Models");
+                });
+
+            modelBuilder.Entity("Server.Model", b =>
                 {
                     b.Navigation("Assets");
                 });
 
-            modelBuilder.Entity("server.Office", b =>
+            modelBuilder.Entity("Server.Office", b =>
                 {
                     b.Navigation("Assets");
                 });
