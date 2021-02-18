@@ -1,4 +1,4 @@
-using System.Threading.Tasks;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Server
@@ -7,29 +7,42 @@ namespace Server
     [Route("[controller]")]
     public class CurrencyController : ControllerBase
     {
-        private readonly ICurrencyService _currencyService;
+        private readonly AssetTrackerContext _context;
+        private readonly ICreateCurrencyService _createCurrencyService;
 
-        public CurrencyController(ICurrencyService currencyService)
+        public CurrencyController(AssetTrackerContext context, ICreateCurrencyService createCurrencyService)
         {
-            _currencyService = currencyService;
+            _context = context;
+            _createCurrencyService = createCurrencyService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetMany()
+        public IActionResult GetAll()
         {
-            return Ok(await _currencyService.GetMany());
+            var currencies = _context.Currencies.ToList();
+
+            return new OkObjectResult(currencies);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public IActionResult Get(int id)
         {
-            return Ok(await _currencyService.Get(id));
+            var currency = _context.Currencies.FirstOrDefault(currency => currency.Id == id);
+
+            if (currency == null)
+            {
+                return new NotFoundResult();
+            }
+
+            return new OkObjectResult(currency);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateCurrencyDto dto)
+        public IActionResult Create(CreateCurrencyDto dto)
         {
-            return Ok(await _currencyService.Create(dto));
+            var result = _createCurrencyService.Run(dto);
+
+            return result;
         }
     }
 }
