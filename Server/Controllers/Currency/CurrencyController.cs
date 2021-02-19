@@ -7,13 +7,19 @@ namespace Server
     [Route("[controller]")]
     public class CurrencyController : ControllerBase
     {
-        private readonly AssetTrackerContext _context;
-        private readonly ICreateCurrencyService _createCurrencyService;
+        private AssetTrackerContext _context;
+        private ICreateCurrencyService _createCurrencyService;
+        private IUpdateCurrencyService _updateCurrencyService; 
 
-        public CurrencyController(AssetTrackerContext context, ICreateCurrencyService createCurrencyService)
+        public CurrencyController(
+            AssetTrackerContext context,
+            ICreateCurrencyService createCurrencyService,
+            IUpdateCurrencyService updateCurrencyService
+        )
         {
             _context = context;
             _createCurrencyService = createCurrencyService;
+            _updateCurrencyService = updateCurrencyService;
         }
 
         [HttpGet]
@@ -31,7 +37,7 @@ namespace Server
 
             if (currency == null)
             {
-                return new NotFoundResult();
+                return new NotFoundObjectResult($"Currency with id {id} not found");
             }
 
             return new OkObjectResult(currency);
@@ -43,6 +49,30 @@ namespace Server
             var result = _createCurrencyService.Run(dto);
 
             return result;
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, UpdateCurrencyDto dto)
+        {
+            var result = _updateCurrencyService.Run(id, dto);
+
+            return result;
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var currency = _context.Currencies.FirstOrDefault(currency => currency.Id == id);
+
+            if (currency == null)
+            {
+                return new NotFoundObjectResult($"Currency with id {id} not found");
+            }
+
+            _context.Currencies.Remove(currency);
+            _context.SaveChanges();
+
+            return new OkResult();
         }
     }
 }
