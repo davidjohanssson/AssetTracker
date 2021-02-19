@@ -26,7 +26,7 @@ namespace Server
         public double ExchangeRateRelativeToDollar { get; set; }
 
         [JsonIgnore]
-        public List<Office> Offices { get; } = new List<Office>();
+        public List<Office> Offices { get; set; } = new List<Office>();
     }
 
     public class Office
@@ -38,7 +38,7 @@ namespace Server
         public Currency Currency { get; set; }
 
         [JsonIgnore]
-        public List<Asset> Assets { get; } = new List<Asset>();
+        public List<Asset> Assets { get; set; } = new List<Asset>();
     }
 
     public class FormFactor
