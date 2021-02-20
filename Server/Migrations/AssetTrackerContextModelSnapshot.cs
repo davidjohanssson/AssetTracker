@@ -26,10 +26,10 @@ namespace Server.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ModelId")
+                    b.Property<int>("OfficeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("OfficeId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("PurchaseDate")
@@ -37,9 +37,9 @@ namespace Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ModelId");
-
                     b.HasIndex("OfficeId");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("Assets");
                 });
@@ -92,7 +92,27 @@ namespace Server.Migrations
                     b.ToTable("FormFactors");
                 });
 
-            modelBuilder.Entity("Server.Model", b =>
+            modelBuilder.Entity("Server.Office", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CurrencyId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CurrencyId");
+
+                    b.ToTable("Offices");
+                });
+
+            modelBuilder.Entity("Server.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -117,65 +137,26 @@ namespace Server.Migrations
 
                     b.HasIndex("FormFactorId");
 
-                    b.ToTable("Models");
-                });
-
-            modelBuilder.Entity("Server.Office", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CurrencyId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CurrencyId");
-
-                    b.ToTable("Offices");
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Server.Asset", b =>
                 {
-                    b.HasOne("Server.Model", "Model")
-                        .WithMany("Assets")
-                        .HasForeignKey("ModelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Server.Office", "Office")
                         .WithMany("Assets")
                         .HasForeignKey("OfficeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Model");
+                    b.HasOne("Server.Product", "Product")
+                        .WithMany("Assets")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Office");
-                });
 
-            modelBuilder.Entity("Server.Model", b =>
-                {
-                    b.HasOne("Server.Brand", "Brand")
-                        .WithMany("Models")
-                        .HasForeignKey("BrandId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Server.FormFactor", "FormFactor")
-                        .WithMany("Models")
-                        .HasForeignKey("FormFactorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Brand");
-
-                    b.Navigation("FormFactor");
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Server.Office", b =>
@@ -189,9 +170,28 @@ namespace Server.Migrations
                     b.Navigation("Currency");
                 });
 
+            modelBuilder.Entity("Server.Product", b =>
+                {
+                    b.HasOne("Server.Brand", "Brand")
+                        .WithMany("Products")
+                        .HasForeignKey("BrandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Server.FormFactor", "FormFactor")
+                        .WithMany("Products")
+                        .HasForeignKey("FormFactorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Brand");
+
+                    b.Navigation("FormFactor");
+                });
+
             modelBuilder.Entity("Server.Brand", b =>
                 {
-                    b.Navigation("Models");
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Server.Currency", b =>
@@ -201,15 +201,15 @@ namespace Server.Migrations
 
             modelBuilder.Entity("Server.FormFactor", b =>
                 {
-                    b.Navigation("Models");
+                    b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("Server.Model", b =>
+            modelBuilder.Entity("Server.Office", b =>
                 {
                     b.Navigation("Assets");
                 });
 
-            modelBuilder.Entity("Server.Office", b =>
+            modelBuilder.Entity("Server.Product", b =>
                 {
                     b.Navigation("Assets");
                 });

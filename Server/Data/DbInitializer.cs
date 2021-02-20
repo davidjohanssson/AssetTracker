@@ -12,7 +12,7 @@ namespace Server
             SeedOffices(context);
             SeedFormFactors(context);
             SeedBrands(context);
-            SeedModels(context);
+            SeedProducts(context);
             SeedAssets(context);
         }
 
@@ -148,40 +148,40 @@ namespace Server
             context.SaveChanges();
         }
 
-        private static void SeedModels(AssetTrackerContext context)
+        private static void SeedProducts(AssetTrackerContext context)
         {
-            if (context.Models.Any())
+            if (context.Products.Any())
             {
                 return;
             }
 
-            var models = new Model[]
+            var products = new Product[]
             {
-                new Model {
+                new Product {
                     Name = "iPhone X",
                     Price = 630.00,
                     Brand = context.Brands.Where(brand => brand.Name == "Apple").FirstOrDefault(),
                     FormFactor = context.FormFactors.Where(formFactor => formFactor.Name == "Phone").FirstOrDefault(),
                 },
-                new Model {
+                new Product {
                     Name = "iPad",
                     Price = 1100.50,
                     Brand = context.Brands.Where(brand => brand.Name == "Apple").FirstOrDefault(),
                     FormFactor = context.FormFactors.Where(formFactor => formFactor.Name == "Tablet").FirstOrDefault(),
                 },
-                new Model {
+                new Product {
                     Name = "ProDesk 600",
                     Price = 310.00,
                     Brand = context.Brands.Where(brand => brand.Name == "HP").FirstOrDefault(),
                     FormFactor = context.FormFactors.Where(formFactor => formFactor.Name == "Desktop").FirstOrDefault(),
                 },
-                new Model {
+                new Product {
                     Name = "IdeaPad 330",
                     Price = 550.99,
                     Brand = context.Brands.Where(brand => brand.Name == "Lenovo").FirstOrDefault(),
                     FormFactor = context.FormFactors.Where(formFactor => formFactor.Name == "Laptop").FirstOrDefault(),
                 },
-                new Model {
+                new Product {
                     Name = "Galaxy S10e",
                     Price = 620.50,
                     Brand = context.Brands.Where(brand => brand.Name == "Samsung").FirstOrDefault(),
@@ -189,9 +189,9 @@ namespace Server
                 }
             };
 
-            foreach (var model in models)
+            foreach (var product in products)
             {
-                context.Models.Add(model);
+                context.Products.Add(product);
             }
 
             context.SaveChanges();
@@ -208,27 +208,27 @@ namespace Server
             {
                 new Asset {
                     PurchaseDate = new DateTime(2017, 5, 11),
-                    Model = context.Models.Where(model => model.Name == "iPhone X").FirstOrDefault(),
+                    Product = context.Products.Where(product => product.Name == "iPhone X").FirstOrDefault(),
                     Office = context.Offices.Where(office => office.City == "Berlin").FirstOrDefault(),
                 },
                 new Asset {
                     PurchaseDate = new DateTime(2018, 3, 12),
-                    Model = context.Models.Where(model => model.Name == "iPad").FirstOrDefault(),
+                    Product = context.Products.Where(product => product.Name == "iPad").FirstOrDefault(),
                     Office = context.Offices.Where(office => office.City == "Madrid").FirstOrDefault(),
                 },
                 new Asset {
                     PurchaseDate = new DateTime(2019, 9, 26),
-                    Model = context.Models.Where(model => model.Name == "IdeaPad 330").FirstOrDefault(),
+                    Product = context.Products.Where(product => product.Name == "IdeaPad 330").FirstOrDefault(),
                     Office = context.Offices.Where(office => office.City == "Madrid").FirstOrDefault(),
                 },
                 new Asset {
                     PurchaseDate = new DateTime(2017, 2, 17),
-                    Model = context.Models.Where(model => model.Name == "ProDesk 600").FirstOrDefault(),
+                    Product = context.Products.Where(product => product.Name == "ProDesk 600").FirstOrDefault(),
                     Office = context.Offices.Where(office => office.City == "Stockholm").FirstOrDefault(),
                 },
                 new Asset {
                     PurchaseDate = new DateTime(2018, 6, 2),
-                    Model = context.Models.Where(model => model.Name == "Galaxy S10e").FirstOrDefault(),
+                    Product = context.Products.Where(product => product.Name == "Galaxy S10e").FirstOrDefault(),
                     Office = context.Offices.Where(office => office.City == "Boston").FirstOrDefault(),
                 }
             };

@@ -15,7 +15,7 @@ namespace Server
         public DbSet<Office> Offices { get; set; }
         public DbSet<FormFactor> FormFactors { get; set; }
         public DbSet<Brand> Brands { get; set; }
-        public DbSet<Model> Models { get; set; }
+        public DbSet<Product> Products { get; set; }
         public DbSet<Asset> Assets { get; set; }
     }
 
@@ -47,7 +47,7 @@ namespace Server
         public string Name { get; set; }
 
         [JsonIgnore]
-        public List<Model> Models { get; set; } = new List<Model>();
+        public List<Product> Products { get; set; } = new List<Product>();
     }
 
     public class Brand
@@ -56,10 +56,10 @@ namespace Server
         public string Name { get; set; }
 
         [JsonIgnore]
-        public List<Model> Models { get; set; } = new List<Model>();
+        public List<Product> Products { get; set; } = new List<Product>();
     }
 
-    public class Model
+    public class Product
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -80,8 +80,8 @@ namespace Server
         public int Id { get; set; }
         public DateTime PurchaseDate { get; set; }
 
-        public int ModelId { get; set; }
-        public Model Model { get; set; }
+        public int ProductId { get; set; }
+        public Product Product { get; set; }
 
         public int OfficeId { get; set; }
         public Office Office { get; set; }

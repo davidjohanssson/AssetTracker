@@ -7,11 +7,11 @@ namespace Server
 {
     [ApiController]
     [Route("[controller]")]
-    public class ModelController : ControllerBase
+    public class ProductController : ControllerBase
     {
         private AssetTrackerContext _context;
 
-        public ModelController(AssetTrackerContext context)
+        public ProductController(AssetTrackerContext context)
         {
             _context = context;
         }
@@ -19,32 +19,32 @@ namespace Server
         [HttpGet]
         public IActionResult GetAll()
         {
-            var models = _context.Models
-                .Include(model => model.Brand)
-                .Include(model => model.FormFactor)
+            var products = _context.Products
+                .Include(product => product.Brand)
+                .Include(product => product.FormFactor)
                 .ToList();
 
-            return new OkObjectResult(models);
+            return new OkObjectResult(products);
         }
 
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var model = _context.Models
-                .Include(model => model.Brand)
-                .Include(model => model.FormFactor)
-                .FirstOrDefault(model => model.Id == id);
+            var product = _context.Products
+                .Include(product => product.Brand)
+                .Include(product => product.FormFactor)
+                .FirstOrDefault(product => product.Id == id);
 
-            if (model == null)
+            if (product == null)
             {
-                return new NotFoundObjectResult($"Model with id {id} not found");
+                return new NotFoundObjectResult($"Product with id {id} not found");
             }
 
-            return new OkObjectResult(model);
+            return new OkObjectResult(product);
         }
 
         [HttpPost]
-        public IActionResult Create(ModelDto dto)
+        public IActionResult Create(ProductDto dto)
         {
             if (dto.Name == null)
             {
@@ -85,29 +85,29 @@ namespace Server
                 return new NotFoundObjectResult($"FormFactor with id {dto.FormFactorId} not found");
             }
 
-            var model = new Model();
-            model.Name = dto.Name;
-            model.Price = dto.Price;
-            model.Brand = brand;
-            model.FormFactor = formFactor;
+            var product = new Product();
+            product.Name = dto.Name;
+            product.Price = dto.Price;
+            product.Brand = brand;
+            product.FormFactor = formFactor;
 
-            _context.Models.Add(model);
+            _context.Products.Add(product);
             _context.SaveChanges();
 
-            return new OkObjectResult(model);
+            return new OkObjectResult(product);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, ModelDto dto)
+        public IActionResult Update(int id, ProductDto dto)
         {
-            var model = _context.Models
-                .Include(model => model.Brand)
-                .Include(model => model.FormFactor)
-                .FirstOrDefault(model => model.Id == id);
+            var product = _context.Products
+                .Include(product => product.Brand)
+                .Include(product => product.FormFactor)
+                .FirstOrDefault(product => product.Id == id);
 
-            if (model == null)
+            if (product == null)
             {
-                return new NotFoundObjectResult($"Model with id {id} not found");
+                return new NotFoundObjectResult($"Product with id {id} not found");
             }
 
             if (dto.Name == null)
@@ -151,28 +151,28 @@ namespace Server
                 return new NotFoundObjectResult($"FormFactor with id {dto.FormFactorId} not found");
             }
 
-            model.Name = dto.Name;
-            model.Price = dto.Price;
-            model.Brand = brand;
-            model.FormFactor = formFactor;
+            product.Name = dto.Name;
+            product.Price = dto.Price;
+            product.Brand = brand;
+            product.FormFactor = formFactor;
 
             _context.SaveChanges();
 
-            return new OkObjectResult(model);
+            return new OkObjectResult(product);
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var model = _context.Models
-                .FirstOrDefault(model => model.Id == id);
+            var product = _context.Products
+                .FirstOrDefault(product => product.Id == id);
 
-            if (model == null)
+            if (product == null)
             {
-                return new NotFoundObjectResult($"Model with id {id} not found");
+                return new NotFoundObjectResult($"Product with id {id} not found");
             }
 
-            _context.Models.Remove(model);
+            _context.Products.Remove(product);
             _context.SaveChanges();
 
             return new OkResult();

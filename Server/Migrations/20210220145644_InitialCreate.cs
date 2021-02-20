@@ -68,7 +68,7 @@ namespace Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Models",
+                name: "Products",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -80,15 +80,15 @@ namespace Server.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Models", x => x.Id);
+                    table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Models_Brands_BrandId",
+                        name: "FK_Products_Brands_BrandId",
                         column: x => x.BrandId,
                         principalTable: "Brands",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Models_FormFactors_FormFactorId",
+                        name: "FK_Products_FormFactors_FormFactorId",
                         column: x => x.FormFactorId,
                         principalTable: "FormFactors",
                         principalColumn: "Id",
@@ -102,30 +102,25 @@ namespace Server.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PurchaseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModelId = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
                     OfficeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Assets", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Assets_Models_ModelId",
-                        column: x => x.ModelId,
-                        principalTable: "Models",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_Assets_Offices_OfficeId",
                         column: x => x.OfficeId,
                         principalTable: "Offices",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Assets_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Assets_ModelId",
-                table: "Assets",
-                column: "ModelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Assets_OfficeId",
@@ -133,19 +128,24 @@ namespace Server.Migrations
                 column: "OfficeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Models_BrandId",
-                table: "Models",
-                column: "BrandId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Models_FormFactorId",
-                table: "Models",
-                column: "FormFactorId");
+                name: "IX_Assets_ProductId",
+                table: "Assets",
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Offices_CurrencyId",
                 table: "Offices",
                 column: "CurrencyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_BrandId",
+                table: "Products",
+                column: "BrandId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_FormFactorId",
+                table: "Products",
+                column: "FormFactorId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -154,19 +154,19 @@ namespace Server.Migrations
                 name: "Assets");
 
             migrationBuilder.DropTable(
-                name: "Models");
+                name: "Offices");
 
             migrationBuilder.DropTable(
-                name: "Offices");
+                name: "Products");
+
+            migrationBuilder.DropTable(
+                name: "Currencies");
 
             migrationBuilder.DropTable(
                 name: "Brands");
 
             migrationBuilder.DropTable(
                 name: "FormFactors");
-
-            migrationBuilder.DropTable(
-                name: "Currencies");
         }
     }
 }
