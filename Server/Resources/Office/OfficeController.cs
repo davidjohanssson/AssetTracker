@@ -120,7 +120,8 @@ namespace Server
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var office = _context.Offices.FirstOrDefault(office => office.Id == id);
+            var office = _context.Offices
+                .FirstOrDefault(office => office.Id == id);
 
             if (office == null)
             {

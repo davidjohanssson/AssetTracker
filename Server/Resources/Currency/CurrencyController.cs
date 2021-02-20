@@ -61,7 +61,7 @@ namespace Server
 
             if (Math.Round(dto.ExchangeRateRelativeToDollar, 2) != dto.ExchangeRateRelativeToDollar)
             {
-                return new BadRequestObjectResult("ExchangeRateRelativeToDollar must be two decimals");
+                return new BadRequestObjectResult("ExchangeRateRelativeToDollar must have two decimals");
             }
 
             var currency = new Currency();
