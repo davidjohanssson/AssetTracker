@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Server
 {
@@ -13,14 +14,6 @@ namespace Server
         public CurrencyController(AssetTrackerContext context)
         {
             _context = context;
-        }
-
-        [HttpGet]
-        public IActionResult GetAll()
-        {
-            var currencies = _context.Currencies.ToList();
-
-            return new OkObjectResult(currencies);
         }
 
         [HttpGet("{id}")]
@@ -126,6 +119,12 @@ namespace Server
             _context.Currencies.Remove(currency);
             _context.SaveChanges();
 
+            return new OkResult();
+        }
+
+        [HttpPost("search")]
+        public IActionResult Search(CurrencySearch search)
+        {
             return new OkResult();
         }
     }
