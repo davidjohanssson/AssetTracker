@@ -1,6 +1,6 @@
 namespace Server
 {
-    public class UpdateOfficeDto
+    public class OfficeDto
     {
         public string City { get; set; }
         public int CurrencyId { get; set; }

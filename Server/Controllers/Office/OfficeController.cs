@@ -41,7 +41,7 @@ namespace Server
         }
 
         [HttpPost]
-        public IActionResult Create(CreateOfficeDto dto)
+        public IActionResult Create(OfficeDto dto)
         {
             if (dto.City == null)
             {
@@ -76,7 +76,7 @@ namespace Server
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, UpdateOfficeDto dto)
+        public IActionResult Update(int id, OfficeDto dto)
         {
             var office = _context.Offices
                 .Include(office => office.Currency)

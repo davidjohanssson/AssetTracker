@@ -37,7 +37,7 @@ namespace Server
         }
 
         [HttpPost]
-        public IActionResult Create(CreateCurrencyDto dto)
+        public IActionResult Create(CurrencyDto dto)
         {
             if (dto.Name == null)
             {
@@ -75,7 +75,7 @@ namespace Server
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, UpdateCurrencyDto dto)
+        public IActionResult Update(int id, CurrencyDto dto)
         {
             var currency = _context.Currencies.FirstOrDefault(currency => currency.Id == id);
 
