@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,18 +9,10 @@ namespace Server
     public class CurrencyController : ControllerBase
     {
         private AssetTrackerContext _context;
-        private ICreateCurrencyService _createCurrencyService;
-        private IUpdateCurrencyService _updateCurrencyService; 
 
-        public CurrencyController(
-            AssetTrackerContext context,
-            ICreateCurrencyService createCurrencyService,
-            IUpdateCurrencyService updateCurrencyService
-        )
+        public CurrencyController(AssetTrackerContext context)
         {
             _context = context;
-            _createCurrencyService = createCurrencyService;
-            _updateCurrencyService = updateCurrencyService;
         }
 
         [HttpGet]
@@ -46,17 +39,82 @@ namespace Server
         [HttpPost]
         public IActionResult Create(CreateCurrencyDto dto)
         {
-            var result = _createCurrencyService.Run(dto);
+            if (dto.Name == null)
+            {
+                return new BadRequestObjectResult("Name must not be null");
+            }
 
-            return result;
+            if (dto.Name.Length < 3)
+            {
+                return new BadRequestObjectResult("Name must be 3 characters");
+            }
+
+            if (dto.Name.Length > 3)
+            {
+                return new BadRequestObjectResult("Name must be 3 characters");
+            }
+
+            if (double.IsNegative(dto.ExchangeRateRelativeToDollar))
+            {
+                return new BadRequestObjectResult("ExchangeRateRelativeToDollar must be positive");
+            }
+
+            if (Math.Round(dto.ExchangeRateRelativeToDollar, 2) != dto.ExchangeRateRelativeToDollar)
+            {
+                return new BadRequestObjectResult("ExchangeRateRelativeToDollar must be two decimals");
+            }
+
+            var currency = new Currency();
+            currency.Name = dto.Name;
+            currency.ExchangeRateRelativeToDollar = dto.ExchangeRateRelativeToDollar;
+
+            _context.Currencies.Add(currency);
+            _context.SaveChanges();
+
+            return new OkObjectResult(currency);
         }
 
         [HttpPut("{id}")]
         public IActionResult Update(int id, UpdateCurrencyDto dto)
         {
-            var result = _updateCurrencyService.Run(id, dto);
+            var currency = _context.Currencies.FirstOrDefault(currency => currency.Id == id);
 
-            return result;
+            if (currency == null)
+            {
+                return new NotFoundObjectResult($"Currency with id {id} not found");
+            }
+
+            if (dto.Name == null)
+            {
+                return new BadRequestObjectResult("Name must not be null");
+            }
+
+            if (dto.Name.Length < 3)
+            {
+                return new BadRequestObjectResult("Name must be 3 characters");
+            }
+
+            if (dto.Name.Length > 3)
+            {
+                return new BadRequestObjectResult("Name must be 3 characters");
+            }
+
+            if (double.IsNegative(dto.ExchangeRateRelativeToDollar))
+            {
+                return new BadRequestObjectResult("ExchangeRateRelativeToDollar must be positive");
+            }
+
+            if (Math.Round(dto.ExchangeRateRelativeToDollar, 2) != dto.ExchangeRateRelativeToDollar)
+            {
+                return new BadRequestObjectResult("ExchangeRateRelativeToDollar must be two decimals");
+            }
+
+            currency.Name = dto.Name;
+            currency.ExchangeRateRelativeToDollar = dto.ExchangeRateRelativeToDollar;
+
+            _context.SaveChanges();
+
+            return new OkObjectResult(currency);
         }
 
         [HttpDelete("{id}")]

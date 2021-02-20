@@ -20,8 +20,6 @@ namespace Server
         {
             services.AddDbContext<AssetTrackerContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();
-            services.AddScoped<ICreateCurrencyService, CreateCurrencyService>();
-            services.AddScoped<IUpdateCurrencyService, UpdateCurrencyService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
