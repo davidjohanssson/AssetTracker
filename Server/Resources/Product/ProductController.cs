@@ -44,7 +44,7 @@ namespace Server
         }
 
         [HttpPost]
-        public IActionResult Create(ProductDto dto)
+        public IActionResult Create(Product dto)
         {
             if (dto.Name == null)
             {
@@ -85,20 +85,14 @@ namespace Server
                 return new NotFoundObjectResult($"FormFactor with id {dto.FormFactorId} not found");
             }
 
-            var product = new Product();
-            product.Name = dto.Name;
-            product.Price = dto.Price;
-            product.Brand = brand;
-            product.FormFactor = formFactor;
-
-            _context.Products.Add(product);
+            _context.Products.Add(dto);
             _context.SaveChanges();
 
-            return new OkObjectResult(product);
+            return new OkObjectResult(dto);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, ProductDto dto)
+        public IActionResult Update(int id, Product dto)
         {
             var product = _context.Products
                 .Include(product => product.Brand)

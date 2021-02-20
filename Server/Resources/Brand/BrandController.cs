@@ -36,7 +36,7 @@ namespace Server
         }
 
         [HttpPost]
-        public IActionResult Create(BrandDto dto)
+        public IActionResult Create(Brand dto)
         {
             if (dto.Name == null)
             {
@@ -53,17 +53,14 @@ namespace Server
                 return new BadRequestObjectResult("Name must not be more than 256 characters");
             }
 
-            var brand = new Brand();
-            brand.Name = dto.Name;
-
-            _context.Brands.Add(brand);
+            _context.Brands.Add(dto);
             _context.SaveChanges();
 
-            return new OkObjectResult(brand);
+            return new OkObjectResult(dto);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, BrandDto dto)
+        public IActionResult Update(int id, Brand dto)
         {
             var brand = _context.Brands
                 .FirstOrDefault(brand => brand.Id == id);

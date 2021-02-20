@@ -41,7 +41,7 @@ namespace Server
         }
 
         [HttpPost]
-        public IActionResult Create(OfficeDto dto)
+        public IActionResult Create(Office dto)
         {
             if (dto.City == null)
             {
@@ -65,18 +65,14 @@ namespace Server
                 return new NotFoundObjectResult($"Currency with id {dto.CurrencyId} not found");
             }
 
-            var office = new Office();
-            office.City = dto.City;
-            office.Currency = currency;
-
-            _context.Offices.Add(office);
+            _context.Offices.Add(dto);
             _context.SaveChanges();
 
-            return new OkObjectResult(office);
+            return new OkObjectResult(dto);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, OfficeDto dto)
+        public IActionResult Update(int id, Office dto)
         {
             var office = _context.Offices
                 .Include(office => office.Currency)

@@ -37,7 +37,7 @@ namespace Server
         }
 
         [HttpPost]
-        public IActionResult Create(CurrencyDto dto)
+        public IActionResult Create(Currency dto)
         {
             if (dto.Name == null)
             {
@@ -64,18 +64,14 @@ namespace Server
                 return new BadRequestObjectResult("ExchangeRateRelativeToDollar must have two decimals");
             }
 
-            var currency = new Currency();
-            currency.Name = dto.Name;
-            currency.ExchangeRateRelativeToDollar = dto.ExchangeRateRelativeToDollar;
-
-            _context.Currencies.Add(currency);
+            _context.Currencies.Add(dto);
             _context.SaveChanges();
 
-            return new OkObjectResult(currency);
+            return new OkObjectResult(dto);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, CurrencyDto dto)
+        public IActionResult Update(int id, Currency dto)
         {
             var currency = _context.Currencies.FirstOrDefault(currency => currency.Id == id);
 

@@ -38,7 +38,7 @@ namespace Server
         }
 
         [HttpPost]
-        public IActionResult Create(FormFactorDto dto)
+        public IActionResult Create(FormFactor dto)
         {
             if (dto.Name == null)
             {
@@ -55,17 +55,14 @@ namespace Server
                 return new BadRequestObjectResult("Name must not be more than 256 characters");
             }
 
-            var formFactor = new FormFactor();
-            formFactor.Name = dto.Name;
-
-            _context.FormFactors.Add(formFactor);
+            _context.FormFactors.Add(dto);
             _context.SaveChanges();
 
-            return new OkObjectResult(formFactor);
+            return new OkObjectResult(dto);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, FormFactorDto dto)
+        public IActionResult Update(int id, FormFactor dto)
         {
             var formFactor = _context.FormFactors
                 .FirstOrDefault(formFactor => formFactor.Id == id);
