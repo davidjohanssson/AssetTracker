@@ -125,7 +125,31 @@ namespace Server
         [HttpPost("search")]
         public IActionResult Search(CurrencySearch search)
         {
-            return new OkResult();
+            var query = _context.Currencies.AsQueryable();
+
+            if (search.Ids != null)
+            {
+                query = query.Where(currency => search.Ids.Contains(currency.Id));
+            }
+
+            if (search.Names != null)
+            {
+                query = query.Where(currency => search.Names.Contains(currency.Name));
+            }
+
+            if (search.ExchangeRateRelativeToDollarMin != null)
+            {
+                query = query.Where(currency => currency.ExchangeRateRelativeToDollar >= search.ExchangeRateRelativeToDollarMin);
+            }
+
+            if (search.ExchangeRateRelativeToDollarMax != null)
+            {
+                query = query.Where(currency => currency.ExchangeRateRelativeToDollar <= search.ExchangeRateRelativeToDollarMax);
+            }
+
+            var currencies = query.ToList();
+
+            return new OkObjectResult(currencies);
         }
     }
 }
