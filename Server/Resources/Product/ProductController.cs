@@ -192,9 +192,19 @@ namespace Server
                 query = query.Where(product => filter.BrandIds.Contains(product.BrandId));
             }
 
+            if (filter.BrandNames != null)
+            {
+                query = query.Where(product => filter.BrandNames.Contains(product.Brand.Name));
+            }
+
             if (filter.FormFactorIds != null)
             {
                 query = query.Where(product => filter.FormFactorIds.Contains(product.FormFactorId));
+            }
+
+            if (filter.FormFactorNames != null)
+            {
+                query = query.Where(product => filter.FormFactorNames.Contains(product.FormFactor.Name));
             }
 
             if (filter.OrderByAsc != null)
