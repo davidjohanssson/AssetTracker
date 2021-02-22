@@ -122,44 +122,44 @@ namespace Server
             return new OkResult();
         }
 
-        [HttpPost("search")]
-        public IActionResult Search(CurrencySearch search)
+        [HttpPost("filter")]
+        public IActionResult Filter(CurrencyFilter filter)
         {
             var query = _context.Currencies.AsQueryable();
 
-            if (search.Ids != null)
+            if (filter.Ids != null)
             {
-                query = query.Where(currency => search.Ids.Contains(currency.Id));
+                query = query.Where(currency => filter.Ids.Contains(currency.Id));
             }
 
-            if (search.Names != null)
+            if (filter.Names != null)
             {
-                query = query.Where(currency => search.Names.Contains(currency.Name));
+                query = query.Where(currency => filter.Names.Contains(currency.Name));
             }
 
-            if (search.ExchangeRateRelativeToDollarMin != null)
+            if (filter.ExchangeRateRelativeToDollarMin != null)
             {
-                query = query.Where(currency => currency.ExchangeRateRelativeToDollar >= search.ExchangeRateRelativeToDollarMin);
+                query = query.Where(currency => currency.ExchangeRateRelativeToDollar >= filter.ExchangeRateRelativeToDollarMin);
             }
 
-            if (search.ExchangeRateRelativeToDollarMax != null)
+            if (filter.ExchangeRateRelativeToDollarMax != null)
             {
-                query = query.Where(currency => currency.ExchangeRateRelativeToDollar <= search.ExchangeRateRelativeToDollarMax);
+                query = query.Where(currency => currency.ExchangeRateRelativeToDollar <= filter.ExchangeRateRelativeToDollarMax);
             }
 
-            if (search.OrderByAsc != null)
+            if (filter.OrderByAsc != null)
             {
-                query = query.OrderBy(search.OrderByAsc);
+                query = query.OrderBy(filter.OrderByAsc);
             }
 
-            if (search.OrderByDesc != null)
+            if (filter.OrderByDesc != null)
             {
-                query = query.OrderByDescending(search.OrderByDesc);
+                query = query.OrderByDescending(filter.OrderByDesc);
             }
 
-            if (search.Skip != null)
+            if (filter.Skip != null)
             {
-                query = query.Skip(search.Skip.Value);
+                query = query.Skip(filter.Skip.Value);
             }
 
             query.Take(25);

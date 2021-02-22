@@ -2,7 +2,7 @@ using System;
 
 namespace Server
 {
-    public class CurrencySearch
+    public class CurrencyFilter
     {
         public int[] Ids { get; set; }
         public string[] Names { get; set; }

@@ -15,16 +15,6 @@ namespace Server
             _context = context;
         }
 
-        [HttpGet]
-        public IActionResult GetAll()
-        {
-            var offices = _context.Offices
-                .Include(office => office.Currency)
-                .ToList();
-
-            return new OkObjectResult(offices);
-        }
-
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -128,6 +118,50 @@ namespace Server
             _context.SaveChanges();
 
             return new OkResult();
+        }
+
+        [HttpPost("filter")]
+        public IActionResult Filter(OfficeFilter filter)
+        {
+            var query = _context.Offices.AsQueryable();
+
+            if (filter.Ids != null)
+            {
+                query = query.Where(office => filter.Ids.Contains(office.Id));
+            }
+
+            if (filter.Cities != null)
+            {
+                query = query.Where(office => filter.Cities.Contains(office.City));
+            }
+
+            if (filter.CurrencyIds != null)
+            {
+                query = query.Where(office => filter.CurrencyIds.Contains(office.CurrencyId));
+            }
+
+            if (filter.OrderByAsc != null)
+            {
+                query = query.OrderBy(filter.OrderByAsc);
+            }
+
+            if (filter.OrderByDesc != null)
+            {
+                query = query.OrderByDescending(filter.OrderByDesc);
+            }
+
+            if (filter.Skip != null)
+            {
+                query = query.Skip(filter.Skip.Value);
+            }
+
+            query.Take(25);
+
+            var offices = query
+                .Include(office => office.Currency)
+                .ToList();
+
+            return new OkObjectResult(offices);
         }
     }
 }
