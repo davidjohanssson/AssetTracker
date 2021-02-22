@@ -16,17 +16,6 @@ namespace Server
             _context = context;
         }
 
-        [HttpGet]
-        public IActionResult GetAll()
-        {
-            var products = _context.Products
-                .Include(product => product.Brand)
-                .Include(product => product.FormFactor)
-                .ToList();
-
-            return new OkObjectResult(products);
-        }
-
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -170,6 +159,66 @@ namespace Server
             _context.SaveChanges();
 
             return new OkResult();
+        }
+
+        [HttpPost("filter")]
+        public IActionResult Filter(ProductFilter filter)
+        {
+            var query = _context.Products.AsQueryable();
+
+            if (filter.Ids != null)
+            {
+                query = query.Where(product => filter.Ids.Contains(product.Id));
+            }
+
+            if (filter.Names != null)
+            {
+                query = query.Where(product => filter.Names.Contains(product.Name));
+            }
+
+            if (filter.PriceMin != null)
+            {
+                query = query.Where(product => product.Price >= filter.PriceMin);
+            }
+
+            if (filter.PriceMax != null)
+            {
+                query = query.Where(product => product.Price <= filter.PriceMax);
+            }
+
+            if (filter.BrandIds != null)
+            {
+                query = query.Where(product => filter.BrandIds.Contains(product.BrandId));
+            }
+
+            if (filter.FormFactorIds != null)
+            {
+                query = query.Where(product => filter.FormFactorIds.Contains(product.FormFactorId));
+            }
+
+            if (filter.OrderByAsc != null)
+            {
+                query = query.OrderBy(filter.OrderByAsc);
+            }
+
+            if (filter.OrderByDesc != null)
+            {
+                query = query.OrderByDescending(filter.OrderByDesc);
+            }
+
+            if (filter.Skip != null)
+            {
+                query = query.Skip(filter.Skip.Value);
+            }
+
+            query.Take(25);
+
+            var products = query
+                .Include(product => product.Brand)
+                .Include(product => product.FormFactor)
+                .ToList();
+
+            return new OkObjectResult(products);
         }
     }
 }
