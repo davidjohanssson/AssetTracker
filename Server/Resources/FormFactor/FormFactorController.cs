@@ -14,15 +14,6 @@ namespace Server
             _context = context;
         }
 
-        [HttpGet]
-        public IActionResult GetAll()
-        {
-            var formFactors = _context.FormFactors
-                .ToList();
-
-            return new OkObjectResult(formFactors);
-        }
-
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -109,6 +100,43 @@ namespace Server
             _context.SaveChanges();
 
             return new OkResult();
+        }
+
+        [HttpPost("filter")]
+        public IActionResult Filter(FormFactorFilter filter)
+        {
+            var query = _context.FormFactors.AsQueryable();
+
+            if (filter.Ids != null)
+            {
+                query = query.Where(formFactor => filter.Ids.Contains(formFactor.Id));
+            }
+
+            if (filter.Names != null)
+            {
+                query = query.Where(formFactor => filter.Names.Contains(formFactor.Name));
+            }
+
+            if (filter.OrderByAsc != null)
+            {
+                query = query.OrderBy(filter.OrderByAsc);
+            }
+
+            if (filter.OrderByDesc != null)
+            {
+                query = query.OrderByDescending(filter.OrderByDesc);
+            }
+
+            if (filter.Skip != null)
+            {
+                query = query.Skip(filter.Skip.Value);
+            }
+
+            query.Take(25);
+
+            var formFactors = query.ToList();
+
+            return new OkObjectResult(formFactors);
         }
     }
 }
