@@ -155,13 +155,17 @@ namespace Server
                 query = query.Skip(filter.Skip.Value);
             }
 
-            query.Take(25);
+            var count = query.Count();
+
+            query = query.Take(20);
 
             var offices = query
                 .Include(office => office.Currency)
                 .ToList();
 
-            return new OkObjectResult(offices);
+            var result = new { offices, count };
+
+            return new OkObjectResult(result);
         }
     }
 }

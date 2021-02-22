@@ -132,11 +132,15 @@ namespace Server
                 query = query.Skip(filter.Skip.Value);
             }
 
-            query.Take(25);
+            var count = query.Count();
+
+            query = query.Take(20);
 
             var formFactors = query.ToList();
 
-            return new OkObjectResult(formFactors);
+            var result = new { formFactors, count };
+
+            return new OkObjectResult(result);
         }
     }
 }

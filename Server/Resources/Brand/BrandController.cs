@@ -130,11 +130,15 @@ namespace Server
                 query = query.Skip(filter.Skip.Value);
             }
 
-            query.Take(25);
+            var count = query.Count();
+
+            query = query.Take(20);
 
             var brands = query.ToList();
 
-            return new OkObjectResult(brands);
+            var result = new { brands, count };
+
+            return new OkObjectResult(result);
         }
     }
 }
