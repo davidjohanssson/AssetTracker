@@ -5,8 +5,8 @@ namespace Server
     public class AssetFilter : Filter
     {
         public int[] Ids { get; set; }
-        public DateTime PurchaseDateMin { get; set; }
-        public DateTime PurchaseDateMax { get; set; }
+        public Nullable<DateTime> PurchaseDateMin { get; set; }
+        public Nullable<DateTime> PurchaseDateMax { get; set; }
         
         // Product
         public int[] ProductIds { get; set; }
