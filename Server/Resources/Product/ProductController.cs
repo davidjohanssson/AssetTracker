@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -211,14 +212,18 @@ namespace Server
                 query = query.Skip(filter.Skip.Value);
             }
 
-            query.Take(25);
+            var count = query.Count();
+
+            query = query.Take(20);
 
             var products = query
                 .Include(product => product.Brand)
                 .Include(product => product.FormFactor)
                 .ToList();
 
-            return new OkObjectResult(products);
+            var result = new { products, count };
+
+            return new OkObjectResult(result);
         }
     }
 }
