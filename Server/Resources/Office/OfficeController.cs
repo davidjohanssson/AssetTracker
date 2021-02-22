@@ -137,7 +137,7 @@ namespace Server
 
             if (filter.CurrencyIds != null)
             {
-                query = query.Where(office => filter.CurrencyIds.Contains(office.CurrencyId));
+                query = query.Where(office => filter.CurrencyIds.Contains(office.Currency.Id));
             }
 
             if (filter.CurrencyNames != null)

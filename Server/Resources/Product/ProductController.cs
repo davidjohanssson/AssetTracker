@@ -189,7 +189,7 @@ namespace Server
 
             if (filter.BrandIds != null)
             {
-                query = query.Where(product => filter.BrandIds.Contains(product.BrandId));
+                query = query.Where(product => filter.BrandIds.Contains(product.Brand.Id));
             }
 
             if (filter.BrandNames != null)
@@ -199,7 +199,7 @@ namespace Server
 
             if (filter.FormFactorIds != null)
             {
-                query = query.Where(product => filter.FormFactorIds.Contains(product.FormFactorId));
+                query = query.Where(product => filter.FormFactorIds.Contains(product.FormFactor.Id));
             }
 
             if (filter.FormFactorNames != null)
