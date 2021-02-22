@@ -147,6 +147,23 @@ namespace Server
                 query = query.Where(currency => currency.ExchangeRateRelativeToDollar <= search.ExchangeRateRelativeToDollarMax);
             }
 
+            if (search.OrderByAsc != null)
+            {
+                query = query.OrderBy(search.OrderByAsc);
+            }
+
+            if (search.OrderByDesc != null)
+            {
+                query = query.OrderByDescending(search.OrderByDesc);
+            }
+
+            if (search.Skip != null)
+            {
+                query = query.Skip(search.Skip.Value);
+            }
+
+            query.Take(25);
+
             var currencies = query.ToList();
 
             return new OkObjectResult(currencies);
