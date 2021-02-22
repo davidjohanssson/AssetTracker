@@ -140,6 +140,21 @@ namespace Server
                 query = query.Where(office => filter.CurrencyIds.Contains(office.CurrencyId));
             }
 
+            if (filter.CurrencyNames != null)
+            {
+                query = query.Where(office => filter.CurrencyNames.Contains(office.Currency.Name));
+            }
+
+            if (filter.CurrencyExchangeRateRelativeToDollarMin != null)
+            {
+                query = query.Where(office => filter.CurrencyExchangeRateRelativeToDollarMin >= office.Currency.ExchangeRateRelativeToDollar);
+            }
+
+            if (filter.CurrencyExchangeRateRelativeToDollarMax != null)
+            {
+                query = query.Where(office => filter.CurrencyExchangeRateRelativeToDollarMax <= office.Currency.ExchangeRateRelativeToDollar);
+            }
+
             if (filter.OrderByAsc != null)
             {
                 query = query.OrderBy(filter.OrderByAsc);
