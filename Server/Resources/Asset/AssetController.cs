@@ -36,6 +36,56 @@ namespace Server
                 query = query.Where(asset => asset.PurchaseDate <= filter.PurchaseDateMax);
             }
 
+            if (filter.ProductIds != null)
+            {
+                query = query.Where(asset => filter.ProductIds.Contains(asset.Product.Id));
+            }
+
+            if (filter.ProductNames != null)
+            {
+                query = query.Where(asset => filter.ProductNames.Contains(asset.Product.Name));
+            }
+
+            if (filter.ProductPriceMin != null)
+            {
+                query = query.Where(asset => asset.Product.Price >= filter.ProductPriceMin);
+            }
+
+            if (filter.ProductPriceMax != null)
+            {
+                query = query.Where(asset => asset.Product.Price <= filter.ProductPriceMax);
+            }
+
+            if (filter.BrandIds != null)
+            {
+                query = query.Where(asset => filter.BrandIds.Contains(asset.Product.Brand.Id));
+            }
+
+            if (filter.BrandNames != null)
+            {
+                query = query.Where(asset => filter.BrandNames.Contains(asset.Product.Brand.Name));
+            }
+
+            if (filter.FormFactorIds != null)
+            {
+                query = query.Where(asset => filter.FormFactorIds.Contains(asset.Product.FormFactor.Id));
+            }
+
+            if (filter.FormFactorNames != null)
+            {
+                query = query.Where(asset => filter.FormFactorNames.Contains(asset.Product.FormFactor.Name));
+            }
+
+            if (filter.OfficeIds != null)
+            {
+                query = query.Where(asset => filter.OfficeIds.Contains(asset.Office.Id));
+            }
+
+            if (filter.OfficeCities != null)
+            {
+                query = query.Where(asset => filter.OfficeCities.Contains(asset.Office.City));
+            }
+
             if (filter.OrderByAsc != null)
             {
                 query = query.OrderBy(filter.OrderByAsc);
