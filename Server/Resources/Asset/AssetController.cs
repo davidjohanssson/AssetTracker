@@ -16,6 +16,109 @@ namespace Server
             _context = context;
         }
 
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            var asset = _context.Assets
+                .Include(asset => asset.Product.Brand)
+                .Include(asset => asset.Product.FormFactor)
+                .Include(asset => asset.Office)
+                .FirstOrDefault(asset => asset.Id == id);
+
+            if (asset == null)
+            {
+                return new NotFoundObjectResult($"Asset with id {id} not found");
+            }
+
+            return new OkObjectResult(asset);
+        }
+
+        [HttpPost]
+        public IActionResult Create(Asset dto)
+        {
+            if (dto.PurchaseDate == null)
+            {
+                return new BadRequestObjectResult("PurchaseDate must not be null");
+            }
+
+            var product = _context.Products.FirstOrDefault(product => product.Id == dto.ProductId);
+
+            if (product == null)
+            {
+                return new NotFoundObjectResult($"Product with id {dto.ProductId} not found");
+            }
+
+            var office = _context.Offices.FirstOrDefault(office => office.Id == dto.OfficeId);
+
+            if (office == null)
+            {
+                return new NotFoundObjectResult($"Office with id {dto.OfficeId} not found");
+            }
+
+            _context.Assets.Add(dto);
+            _context.SaveChanges();
+
+            return new OkObjectResult(dto);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, Asset dto)
+        {
+            var asset = _context.Assets
+                .Include(asset => asset.Product.Brand)
+                .Include(asset => asset.Product.FormFactor)
+                .Include(asset => asset.Office)
+                .FirstOrDefault(asset => asset.Id == id);
+
+            if (asset == null)
+            {
+                return new NotFoundObjectResult($"Asset with id {id} not found");
+            }
+
+            if (asset.PurchaseDate == null)
+            {
+                return new BadRequestObjectResult("PurchaseDate must not be null");
+            }
+
+            var product = _context.Products.FirstOrDefault(product => product.Id == dto.ProductId);
+
+            if (product == null)
+            {
+                return new NotFoundObjectResult($"Product with id {dto.ProductId} not found");
+            }
+
+            var office = _context.Offices.FirstOrDefault(office => office.Id == dto.OfficeId);
+
+            if (office == null)
+            {
+                return new NotFoundObjectResult($"Office with id {dto.OfficeId} not found");
+            }
+
+            asset.PurchaseDate = dto.PurchaseDate;
+            asset.Product = product;
+            asset.Office = office;
+
+            _context.SaveChanges();
+
+            return new OkObjectResult(asset);
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var asset = _context.Assets.FirstOrDefault(asset => asset.Id == id);
+
+            if (asset == null)
+            {
+                return new NotFoundObjectResult($"Asset with id {id} not found");
+            }
+
+            _context.Assets.Remove(asset);
+            _context.SaveChanges();
+
+            return new OkResult();
+        }
+
         [HttpPost("filter")]
         public IActionResult Filter(AssetFilter filter)
         {

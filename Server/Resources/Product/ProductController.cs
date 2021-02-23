@@ -119,16 +119,14 @@ namespace Server
                 return new BadRequestObjectResult("Price must have two decimals");
             }
 
-            var brand = _context.Brands
-                .FirstOrDefault(brand => brand.Id == dto.BrandId);
+            var brand = _context.Brands.FirstOrDefault(brand => brand.Id == dto.BrandId);
 
             if (brand == null)
             {
                 return new NotFoundObjectResult($"Brand with id {dto.BrandId} not found");
             }
 
-            var formFactor = _context.FormFactors
-                .FirstOrDefault(formFactor => formFactor.Id == dto.FormFactorId);
+            var formFactor = _context.FormFactors.FirstOrDefault(formFactor => formFactor.Id == dto.FormFactorId);
 
             if (formFactor == null)
             {
@@ -148,8 +146,7 @@ namespace Server
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var product = _context.Products
-                .FirstOrDefault(product => product.Id == id);
+            var product = _context.Products.FirstOrDefault(product => product.Id == id);
 
             if (product == null)
             {
