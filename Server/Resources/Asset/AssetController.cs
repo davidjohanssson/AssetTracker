@@ -36,9 +36,14 @@ namespace Server
         [HttpPost]
         public IActionResult Create(Asset dto)
         {
-            if (dto.PurchaseDate == null)
+            if (dto.PurchaseDate <= new DateTime(2000, 1, 1))
             {
-                return new BadRequestObjectResult("PurchaseDate must not be null");
+                return new BadRequestObjectResult("PurchaseDate must not be before 2000-01-01");
+            }
+
+            if (dto.PurchaseDate >= DateTime.Now)
+            {
+                return new BadRequestObjectResult("PurchaseDate must not be after current date");
             }
 
             var product = _context.Products.FirstOrDefault(product => product.Id == dto.ProductId);
@@ -75,9 +80,14 @@ namespace Server
                 return new NotFoundObjectResult($"Asset with id {id} not found");
             }
 
-            if (asset.PurchaseDate == null)
+            if (dto.PurchaseDate <= new DateTime(2000, 1, 1))
             {
-                return new BadRequestObjectResult("PurchaseDate must not be null");
+                return new BadRequestObjectResult("PurchaseDate must not be before 2000-01-01");
+            }
+
+            if (dto.PurchaseDate >= DateTime.Now)
+            {
+                return new BadRequestObjectResult("PurchaseDate must not be after current date");
             }
 
             var product = _context.Products.FirstOrDefault(product => product.Id == dto.ProductId);
