@@ -1,2 +1,29 @@
-<p>view works!</p>
-<router-outlet></router-outlet>
+<div class="view">
+    <div class="view__bar mat-elevation-z6">
+        <div class="view__bar__left">
+            <h1 class="view__bar__left__title">AssetTracker</h1>
+        </div>
+        <div class="view__bar__right">
+            <button class="view__bar__right__button" mat-icon-button [matMenuTriggerFor]="currencyMenu">
+                <mat-icon>price_change</mat-icon>
+            </button>
+            <mat-menu #currencyMenu="matMenu" xPosition="before">
+                <button mat-menu-item>EUR</button>
+                <button mat-menu-item>SEK</button>
+                <button mat-menu-item>USD</button>
+            </mat-menu>
+            <button class="view__bar__right__button" mat-icon-button [matMenuTriggerFor]="entityMenu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #entityMenu="matMenu" xPosition="before">
+                <button mat-menu-item routerLink="">Assets</button>
+                <button mat-menu-item routerLink="products">Products</button>
+                <button mat-menu-item routerLink="brands">Brands</button>
+                <button mat-menu-item routerLink="form-factors">Form Factors</button>
+                <button mat-menu-item routerLink="offices">Offices</button>
+                <button mat-menu-item routerLink="currencies">Currencies</button>
+            </mat-menu>
+        </div>
+    </div>
+    <router-outlet></router-outlet>
+</div>
