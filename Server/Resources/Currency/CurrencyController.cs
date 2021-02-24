@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -168,7 +169,7 @@ namespace Server
 
             var currencies = query.ToList();
 
-            var result = new { currencies, count };
+            var result = new Object[] { currencies, count };
 
             return new OkObjectResult(result);
         }

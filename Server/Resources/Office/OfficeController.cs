@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -178,7 +179,7 @@ namespace Server
                 .Include(office => office.Currency)
                 .ToList();
 
-            var result = new { offices, count };
+            var result = new Object[] { offices, count };
 
             return new OkObjectResult(result);
         }

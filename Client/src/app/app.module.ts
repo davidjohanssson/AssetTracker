@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ViewComponent } from './view/view.component';
 import { AssetComponent } from './view/asset/asset.component';
 import { ProductComponent } from './view/product/product.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { ProductComponent } from './view/product/product.component';
     BrowserAnimationsModule,
     MaterialModule,
     ReactiveFormsModule,
+    HttpClientModule,
   ],
   providers: [
     {

@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 
@@ -136,7 +137,7 @@ namespace Server
 
             var brands = query.ToList();
 
-            var result = new { brands, count };
+            var result = new Object[] { brands, count };
 
             return new OkObjectResult(result);
         }

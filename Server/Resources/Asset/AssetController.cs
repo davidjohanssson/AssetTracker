@@ -224,7 +224,7 @@ namespace Server
                 .Include(asset => asset.Office)
                 .ToList();
 
-            var result = new { assets, count };
+            var result = new Object[] { assets, count };
 
             return new OkObjectResult(result);
         }

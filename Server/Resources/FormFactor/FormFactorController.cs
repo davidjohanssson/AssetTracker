@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 
@@ -138,7 +139,7 @@ namespace Server
 
             var formFactors = query.ToList();
 
-            var result = new { formFactors, count };
+            var result = new Object[] { formFactors, count };
 
             return new OkObjectResult(result);
         }

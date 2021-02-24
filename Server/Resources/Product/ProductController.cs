@@ -228,7 +228,7 @@ namespace Server
                 .Include(product => product.FormFactor)
                 .ToList();
 
-            var result = new { products, count };
+            var result = new Object[] { products, count };
 
             return new OkObjectResult(result);
         }
