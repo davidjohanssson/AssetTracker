@@ -1,0 +1,114 @@
+@import '~@angular/material/theming';
+// Theme font
+$custom-typography: mat-typography-config($font-family: '"Poppins", sans-serif;');
+@include mat-core($custom-typography);
+
+$primary: mat-palette($mat-deep-purple, 700);
+$accent:  mat-palette($mat-amber, A200);
+$warn:    mat-palette($mat-red);
+$theme:   mat-light-theme($primary, $accent, $warn);
+
+@include angular-material-theme($theme);
+
+$primary: map-get($theme, primary);
+$accent: map-get($theme, accent);
+$warn: map-get($theme, warn);
+
+:root {
+    // Theme palette
+    --primary: #{mat-color($primary)};
+    --accent: #{mat-color($accent)};
+    --warn: #{mat-color($warn)};
+
+    // Material Red palette
+    --mat-red-50: #FFEBEE;
+    --mat-red-100: #FFCDD2;
+    --mat-red-200: #EF9A9A;
+    --mat-red-300: #E57373;
+    --mat-red-400: #EF5350;
+    --mat-red-500: #F44336;
+    --mat-red-600: #E53935;
+    --mat-red-700: #D32F2F;
+    --mat-red-800: #C62828;
+    --mat-red-900: #B71C1C;
+    --mat-red-A100: #FF8A80;
+    --mat-red-A200: #FF5252;
+    --mat-red-A400: #FF1744;
+    --mat-red-A700: #D50000;
+
+    // Material Deep Purple palette
+    --mat-deep-purple-50: #EDE7F6;
+    --mat-deep-purple-100: #D1C4E9;
+    --mat-deep-purple-200: #B39DDB;
+    --mat-deep-purple-300: #9575CD;
+    --mat-deep-purple-400: #7E57C2;
+    --mat-deep-purple-500: #673AB7;
+    --mat-deep-purple-600: #5E35B1;
+    --mat-deep-purple-700: #512DA8;
+    --mat-deep-purple-800: #4527A0;
+    --mat-deep-purple-900: #311B92;
+    --mat-deep-purple-A100: #B388FF;
+    --mat-deep-purple-A200: #7C4DFF;
+    --mat-deep-purple-A400: #651FFF;
+    --mat-deep-purple-A700: #6200EA;
+
+    // Material Blue palette
+    --mat-blue-50: #E3F2FD;
+    --mat-blue-100: #BBDEFB;
+    --mat-blue-200: #90CAF9;
+    --mat-blue-300: #64B5F6;
+    --mat-blue-400: #42A5F5;
+    --mat-blue-500: #2196F3;
+    --mat-blue-600: #1E88E5;
+    --mat-blue-700: #1976D2;
+    --mat-blue-800: #1565C0;
+    --mat-blue-900: #0D47A1;
+    --mat-blue-A100: #82B1FF;
+    --mat-blue-A200: #448AFF;
+    --mat-blue-A400: #2979FF;
+    --mat-blue-A700: #2962FF;
+
+    // Material Green palette
+    --mat-green-50: #E8F5E9;
+    --mat-green-100: #C8E6C9;
+    --mat-green-200: #A5D6A7;
+    --mat-green-300: #81C784;
+    --mat-green-400: #66BB6A;
+    --mat-green-500: #4CAF50;
+    --mat-green-600: #43A047;
+    --mat-green-700: #388E3C;
+    --mat-green-800: #2E7D32;
+    --mat-green-900: #1B5E20;
+    --mat-green-A100: #B9F6CA;
+    --mat-green-A200: #69F0AE;
+    --mat-green-A400: #00E676;
+    --mat-green-A700: #00C853;
+
+    // Material Amber palette
+    --mat-amber-50: #FFF8E1;
+    --mat-amber-100: #FFECB3;
+    --mat-amber-200: #FFE082;
+    --mat-amber-300: #FFD54F;
+    --mat-amber-400: #FFCA28;
+    --mat-amber-500: #FFC107;
+    --mat-amber-600: #FFB300;
+    --mat-amber-700: #FFA000;
+    --mat-amber-800: #FF8F00;
+    --mat-amber-900: #FF6F00;
+    --mat-amber-A100: #FFE57F;
+    --mat-amber-A200: #FFD740;
+    --mat-amber-A400: #FFC400;
+    --mat-amber-A700: #FFAB00;
+
+    // Material Gray palette
+    --mat-gray-50: #FAFAFA;
+    --mat-gray-100: #F5F5F5;
+    --mat-gray-200: #EEEEEE;
+    --mat-gray-300: #E0E0E0;
+    --mat-gray-400: #BDBDBD;
+    --mat-gray-500: #9E9E9E;
+    --mat-gray-600: #757575;
+    --mat-gray-700: #616161;
+    --mat-gray-800: #424242;
+    --mat-gray-900: #212121;
+}
