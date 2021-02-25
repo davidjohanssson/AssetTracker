@@ -9,6 +9,9 @@ namespace Server
 {
     public class Startup
     {
+        readonly string Development = "development";
+        readonly string Production = "production";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -19,6 +22,16 @@ namespace Server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AssetTrackerContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            
+            services.AddCors(options => {
+                options.AddPolicy(name: Development, builder => {
+                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                });
+                options.AddPolicy(name: Production, builder => {
+                    builder.WithOrigins("https://divv.tech");
+                });
+            });
+
             services.AddControllers();
         }
 
@@ -32,6 +45,15 @@ namespace Server
             //app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            if (env.IsDevelopment())
+            {
+                app.UseCors(Development);
+            }
+            else
+            {
+                app.UseCors(Production);
+            }
 
             app.UseAuthorization();
 

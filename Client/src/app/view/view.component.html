@@ -8,9 +8,11 @@
                 <mat-icon>price_change</mat-icon>
             </button>
             <mat-menu #currencyMenu="matMenu" xPosition="before">
-                <button mat-menu-item>EUR</button>
-                <button mat-menu-item>SEK</button>
-                <button mat-menu-item>USD</button>
+                <ng-container *ngIf="currencies">
+                    <button mat-menu-item *ngFor="let currency of currencies" (click)="setCurrency(currency)">
+                        {{ currency.name }}
+                    </button>
+                </ng-container>
             </mat-menu>
             <button class="view__bar__right__button" mat-icon-button [matMenuTriggerFor]="entityMenu">
                 <mat-icon>more_vert</mat-icon>

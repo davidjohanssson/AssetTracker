@@ -4,6 +4,6 @@ import { Subject } from "rxjs";
 @Injectable({
     providedIn: 'root'
 })
-export class ResourceChanges {
+export class ResourceChange {
     currencies$ = new Subject<void>();
 }
