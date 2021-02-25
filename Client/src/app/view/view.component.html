@@ -4,7 +4,10 @@
             <h1 class="view__bar__left__title">AssetTracker</h1>
         </div>
         <div class="view__bar__right">
-            <button class="view__bar__right__button" mat-icon-button [matMenuTriggerFor]="currencyMenu">
+            <button mat-button [matMenuTriggerFor]="currencyMenu">
+                <ng-container *ngIf="getCurrency()">
+                    {{ getCurrency().name }}
+                </ng-container>
                 <mat-icon>price_change</mat-icon>
             </button>
             <mat-menu #currencyMenu="matMenu" xPosition="before">
@@ -14,7 +17,7 @@
                     </button>
                 </ng-container>
             </mat-menu>
-            <button class="view__bar__right__button" mat-icon-button [matMenuTriggerFor]="entityMenu">
+            <button mat-icon-button [matMenuTriggerFor]="entityMenu">
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #entityMenu="matMenu" xPosition="before">
@@ -27,5 +30,7 @@
             </mat-menu>
         </div>
     </div>
-    <router-outlet></router-outlet>
+    <div class="view__main">
+        <router-outlet></router-outlet>
+    </div>
 </div>

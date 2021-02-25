@@ -1,5 +1,6 @@
 .view {
     height: 100vh;
+    background: var(--mat-deep-purple-A200);
 }
 
 .view__bar {
@@ -34,6 +35,8 @@
     justify-content: flex-end;
 }
 
-.view__bar__right__button {
-    margin-left: 16px;
+.view__main {
+    height: calc(100% - 56px);
+    margin-top: 32px;
+    background: white;
 }

@@ -29,6 +29,10 @@ export class ViewComponent implements OnInit {
     } 
   }
 
+  getCurrency() {
+    return JSON.parse(localStorage.getItem('currency')) as Currency;
+  }
+
   setCurrency(currency: Currency) {
     localStorage.setItem('currency', JSON.stringify(currency));
   }
