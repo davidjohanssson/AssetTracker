@@ -1,11 +1,15 @@
 .view {
-    height: 100vh;
-    background: var(--mat-deep-purple-A200);
+    min-height: 100%;
+    position: relative;
 }
 
 .view__bar {
-    position: sticky;
+    position: absolute;
     top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
     height: 56px;
     background: var(--primary);
     padding-top: 8px;
@@ -36,7 +40,27 @@
 }
 
 .view__main {
-    height: calc(100% - 56px);
-    margin-top: 32px;
+    min-height: calc(100% - 56px);
+    background: var(--mat-deep-purple-A200);
+    overflow-y: auto;
+    position: absolute;
+    top: 56px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+}
+
+.view__main__content {
     background: white;
+    flex-grow: 1;
+}
+
+// Small
+@media only screen and (min-width: 600px) {
+    .view__main__content {
+        margin: 32px;
+    }
 }
