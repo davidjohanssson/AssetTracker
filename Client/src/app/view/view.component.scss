@@ -56,11 +56,19 @@
 .view__main__content {
     background: white;
     flex-grow: 1;
+    padding: 16px;
+    box-sizing: border-box;
 }
 
 // Small
 @media only screen and (min-width: 600px) {
+    .view__bar {
+        padding-left: 32px;
+        padding-right: 32px;
+    }
+
     .view__main__content {
         margin: 32px;
+        padding: 32px;
     }
 }

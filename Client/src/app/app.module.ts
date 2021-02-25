@@ -10,13 +10,17 @@ import { ViewComponent } from './view/view.component';
 import { AssetComponent } from './view/asset/asset.component';
 import { ProductComponent } from './view/product/product.component';
 import { HttpClientModule } from '@angular/common/http';
+import { CurrencyComponent } from './view/currency/currency.component';
+import { CurrencySearchComponent } from './view/currency/currency-search/currency-search.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ViewComponent,
     AssetComponent,
-    ProductComponent
+    ProductComponent,
+    CurrencyComponent,
+    CurrencySearchComponent
   ],
   imports: [
     BrowserModule,

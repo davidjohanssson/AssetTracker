@@ -1,0 +1,15 @@
+<form class="currency__search" [formGroup]="formGroup">
+    <div class="currency__search__fields">
+        <mat-form-field>
+            <mat-label>Currencies</mat-label>
+            <mat-select formControlName="currencies" multiple>
+                <mat-option *ngFor="let currency of currencies" [value]="currency.name">
+                    {{ currency.name }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="currency__search_buttons">
+        <button mat-raised-button type="reset" color="accent">Reset</button>
+    </div>
+</form>
