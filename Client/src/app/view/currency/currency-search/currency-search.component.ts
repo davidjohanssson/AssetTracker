@@ -5,7 +5,7 @@ import { Currency } from 'src/app/shared/resources/currency/currency';
 import { CurrencyHttp } from 'src/app/shared/resources/currency/currency.http';
 import { debounceTime } from 'rxjs/operators';
 import { CurrencyFilter } from 'src/app/shared/resources/currency/currency.filter';
-import { CurrencyStore } from 'src/app/shared/resources/currency/currency.store';
+import { CurrencyState } from 'src/app/shared/resources/currency/currency.state';
 
 @UntilDestroy()
 @Component({
@@ -20,7 +20,7 @@ export class CurrencySearchComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private currencyHttp: CurrencyHttp,
-    private currencyStore: CurrencyStore,
+    private currencyState: CurrencyState,
   ) { }
 
   ngOnInit() {
@@ -41,7 +41,7 @@ export class CurrencySearchComponent implements OnInit {
   }
 
   async getCurrencies() {
-    const filtered = await this.currencyHttp.filter();
+    const filtered = await this.currencyHttp.search();
     this.currencies = filtered[0];
   }
 
@@ -58,10 +58,6 @@ export class CurrencySearchComponent implements OnInit {
       currencyFilter.codes = codes;
     }
     
-    this.currencyStore.loading$.next(true);
-    this.currencyStore.latestSearch$.next([[], 0]);
-    const filtered = await this.currencyHttp.filter(currencyFilter);
-    this.currencyStore.loading$.next(false);
-    this.currencyStore.latestSearch$.next(filtered);
+    await this.currencyHttp.search(currencyFilter);
   }
 }

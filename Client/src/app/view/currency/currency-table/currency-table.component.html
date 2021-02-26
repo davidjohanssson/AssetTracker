@@ -1,4 +1,4 @@
-<mat-table class="currency__table mat-elevation-z3" [dataSource]="this">
+<mat-table [dataSource]="this">
     <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
         <mat-cell *matCellDef="let currency">
@@ -33,5 +33,6 @@
         </mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns; let i = index" [class]="getRowClass(row)" (click)="openCurrencyDialog()"></mat-row>
+    <mat-row matRipple *matRowDef="let row; columns: displayedColumns; let i = index" [class]="getRowClass(row)" (click)="openCurrencyDialog()"></mat-row>
 </mat-table>
+<mat-paginator #paginator [length]="count" [pageSize]="10"></mat-paginator>

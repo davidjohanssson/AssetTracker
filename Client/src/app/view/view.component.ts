@@ -15,7 +15,7 @@ export class ViewComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    const filtered = await this.currencyHttp.filter({ take: Number.MAX_SAFE_INTEGER });
+    const filtered = await this.currencyHttp.search({ take: Number.MAX_SAFE_INTEGER });
     this.currencies = filtered[0];
 
     // Default to USD if currency is not set
