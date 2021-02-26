@@ -141,12 +141,12 @@ namespace Server
                 }
                 else
                 {
-                    query = query.Take(100);
+                    query = query.Take(10);
                 }
             }
             else
             {
-                query = query.Take(100);
+                query = query.Take(10);
             }
 
             var brands = query.ToList();
