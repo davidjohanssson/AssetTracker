@@ -7,6 +7,6 @@ namespace Server
         public string OrderByAsc { get; set; }
         public string OrderByDesc { get; set; }
         public Nullable<int> Skip { get; set; }
-        public Nullable<int> Take { get; set; }
+        public Nullable<long> Take { get; set; }
     }
 }

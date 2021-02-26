@@ -135,13 +135,13 @@ namespace Server
 
             if (filter.Take != null)
             {
-                if (filter.Take < 100)
+                if (filter.Take > 100)
                 {
-                    query = query.Take(filter.Take.Value);
+                    query = query.Take(100);
                 }
                 else
                 {
-                    query = query.Take(10);
+                    query = query.Take(Convert.ToInt32(filter.Take.Value));
                 }
             }
             else

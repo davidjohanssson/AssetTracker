@@ -1,6 +1,6 @@
 export class Filter {
-    orderByAsc: string;
-    orderByDesc: string;
-    skip: number;
-    take: number;
+    orderByAsc?: string;
+    orderByDesc?: string;
+    skip?: number;
+    take?: number;
 }
