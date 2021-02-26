@@ -6,12 +6,6 @@ namespace Server
     {
         public int[] Ids { get; set; }
         public string[] Cities { get; set; }
-
-        // Currency
-        public int[] CurrencyIds { get; set; }
-        public string CurrencyName { get; set; }
-        public string[] CurrencyCodes { get; set; }
-        public Nullable<double> CurrencyExchangeRateRelativeToDollarMin { get; set; }
-        public Nullable<double> CurrencyExchangeRateRelativeToDollarMax { get; set; }
+        public CurrencyFilter CurrencyFilter { get; set; }
     }
 }

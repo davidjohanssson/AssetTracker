@@ -136,29 +136,32 @@ namespace Server
                 query = query.Where(office => filter.Cities.Contains(office.City));
             }
 
-            if (filter.CurrencyIds != null)
+            if (filter.CurrencyFilter != null)
             {
-                query = query.Where(office => filter.CurrencyIds.Contains(office.Currency.Id));
-            }
+                if (filter.CurrencyFilter.Ids != null)
+                {
+                    query = query.Where(office => filter.CurrencyFilter.Ids.Contains(office.Currency.Id));
+                }
 
-            if (filter.CurrencyName != null)
-            {
-                query = query.Where(office => filter.CurrencyName.Contains(office.Currency.Name));
-            }
+                if (filter.CurrencyFilter.Name != null)
+                {
+                    query = query.Where(office => office.Currency.Name.Contains(filter.CurrencyFilter.Name));
+                }
 
-            if (filter.CurrencyCodes != null)
-            {
-                query = query.Where(office => filter.CurrencyCodes.Contains(office.Currency.Code));
-            }
+                if (filter.CurrencyFilter.Codes != null)
+                {
+                    query = query.Where(office => filter.CurrencyFilter.Codes.Contains(office.Currency.Code));
+                }
 
-            if (filter.CurrencyExchangeRateRelativeToDollarMin != null)
-            {
-                query = query.Where(office => filter.CurrencyExchangeRateRelativeToDollarMin >= office.Currency.ExchangeRateRelativeToDollar);
-            }
+                if (filter.CurrencyFilter.ExchangeRateRelativeToDollarMin != null)
+                {
+                    query = query.Where(office => filter.CurrencyFilter.ExchangeRateRelativeToDollarMin >= office.Currency.ExchangeRateRelativeToDollar);
+                }
 
-            if (filter.CurrencyExchangeRateRelativeToDollarMax != null)
-            {
-                query = query.Where(office => filter.CurrencyExchangeRateRelativeToDollarMax <= office.Currency.ExchangeRateRelativeToDollar);
+                if (filter.CurrencyFilter.ExchangeRateRelativeToDollarMax != null)
+                {
+                    query = query.Where(office => filter.CurrencyFilter.ExchangeRateRelativeToDollarMax <= office.Currency.ExchangeRateRelativeToDollar);
+                }
             }
 
             if (filter.OrderByAsc != null)
