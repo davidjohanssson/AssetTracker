@@ -184,24 +184,30 @@ namespace Server
                 query = query.Where(product => product.Price <= filter.PriceMax);
             }
 
-            if (filter.BrandIds != null)
+            if (filter.BrandFilter != null)
             {
-                query = query.Where(product => filter.BrandIds.Contains(product.Brand.Id));
+                if (filter.BrandFilter.Ids != null)
+                {
+                    query = query.Where(product => filter.BrandFilter.Ids.Contains(product.Brand.Id));
+                }
+
+                if (filter.BrandFilter.Names != null)
+                {
+                    query = query.Where(product => filter.BrandFilter.Names.Contains(product.Brand.Name));
+                }
             }
 
-            if (filter.BrandNames != null)
+            if (filter.FormFactorFilter != null)
             {
-                query = query.Where(product => filter.BrandNames.Contains(product.Brand.Name));
-            }
+                if (filter.FormFactorFilter.Ids != null)
+                {
+                    query = query.Where(product => filter.FormFactorFilter.Ids.Contains(product.FormFactor.Id));
+                }
 
-            if (filter.FormFactorIds != null)
-            {
-                query = query.Where(product => filter.FormFactorIds.Contains(product.FormFactor.Id));
-            }
-
-            if (filter.FormFactorNames != null)
-            {
-                query = query.Where(product => filter.FormFactorNames.Contains(product.FormFactor.Name));
+                if (filter.FormFactorFilter.Names != null)
+                {
+                    query = query.Where(product => filter.FormFactorFilter.Names.Contains(product.FormFactor.Name));
+                }
             }
 
             if (filter.OrderByAsc != null)

@@ -8,13 +8,7 @@ namespace Server
         public string[] Names { get; set; }
         public Nullable<double> PriceMin { get; set; }
         public Nullable<double> PriceMax { get; set; }
-
-        // Brand
-        public int[] BrandIds { get; set; }
-        public string[] BrandNames { get; set; }
-
-        // FormFactor
-        public int[] FormFactorIds { get; set; }
-        public string[] FormFactorNames { get; set; }
+        public BrandFilter BrandFilter { get; set; }
+        public FormFactorFilter FormFactorFilter { get; set; }
     }
 }

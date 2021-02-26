@@ -149,54 +149,66 @@ namespace Server
                 query = query.Where(asset => asset.PurchaseDate <= filter.PurchaseDateMax);
             }
 
-            if (filter.ProductIds != null)
+            if (filter.ProductFilter != null)
             {
-                query = query.Where(asset => filter.ProductIds.Contains(asset.Product.Id));
+                if (filter.ProductFilter.Ids != null)
+                {
+                    query = query.Where(asset => filter.ProductFilter.Ids.Contains(asset.Product.Id));
+                }
+
+                if (filter.ProductFilter.Names != null)
+                {
+                    query = query.Where(asset => filter.ProductFilter.Names.Contains(asset.Product.Name));
+                }
+
+                if (filter.ProductFilter.PriceMin != null)
+                {
+                    query = query.Where(asset => asset.Product.Price >= filter.ProductFilter.PriceMin);
+                }
+
+                if (filter.ProductFilter.PriceMax != null)
+                {
+                    query = query.Where(asset => asset.Product.Price <= filter.ProductFilter.PriceMax);
+                }
+
+                if (filter.ProductFilter.BrandFilter != null)
+                {
+                    if (filter.ProductFilter.BrandFilter.Ids != null)
+                    {
+                        query = query.Where(asset => filter.ProductFilter.BrandFilter.Ids.Contains(asset.Product.Brand.Id));
+                    }
+
+                    if (filter.ProductFilter.BrandFilter.Names != null)
+                    {
+                        query = query.Where(asset => filter.ProductFilter.BrandFilter.Names.Contains(asset.Product.Brand.Name));
+                    }
+                }
+
+                if (filter.ProductFilter.FormFactorFilter != null)
+                {
+                    if (filter.ProductFilter.FormFactorFilter.Ids != null)
+                    {
+                        query = query.Where(asset => filter.ProductFilter.FormFactorFilter.Ids.Contains(asset.Product.FormFactor.Id));
+                    }
+
+                    if (filter.ProductFilter.FormFactorFilter.Names != null)
+                    {
+                        query = query.Where(asset => filter.ProductFilter.FormFactorFilter.Names.Contains(asset.Product.FormFactor.Name));
+                    }
+                }
             }
 
-            if (filter.ProductNames != null)
+            if (filter.OfficeFilter != null)
             {
-                query = query.Where(asset => filter.ProductNames.Contains(asset.Product.Name));
-            }
+                if (filter.OfficeFilter.Ids != null)
+                {
+                    query = query.Where(asset => filter.OfficeFilter.Ids.Contains(asset.Office.Id));
+                }
 
-            if (filter.ProductPriceMin != null)
-            {
-                query = query.Where(asset => asset.Product.Price >= filter.ProductPriceMin);
-            }
-
-            if (filter.ProductPriceMax != null)
-            {
-                query = query.Where(asset => asset.Product.Price <= filter.ProductPriceMax);
-            }
-
-            if (filter.BrandIds != null)
-            {
-                query = query.Where(asset => filter.BrandIds.Contains(asset.Product.Brand.Id));
-            }
-
-            if (filter.BrandNames != null)
-            {
-                query = query.Where(asset => filter.BrandNames.Contains(asset.Product.Brand.Name));
-            }
-
-            if (filter.FormFactorIds != null)
-            {
-                query = query.Where(asset => filter.FormFactorIds.Contains(asset.Product.FormFactor.Id));
-            }
-
-            if (filter.FormFactorNames != null)
-            {
-                query = query.Where(asset => filter.FormFactorNames.Contains(asset.Product.FormFactor.Name));
-            }
-
-            if (filter.OfficeIds != null)
-            {
-                query = query.Where(asset => filter.OfficeIds.Contains(asset.Office.Id));
-            }
-
-            if (filter.OfficeCities != null)
-            {
-                query = query.Where(asset => filter.OfficeCities.Contains(asset.Office.City));
+                if (filter.OfficeFilter.Cities != null)
+                {
+                    query = query.Where(asset => filter.OfficeFilter.Cities.Contains(asset.Office.City));
+                }
             }
 
             if (filter.OrderByAsc != null)
