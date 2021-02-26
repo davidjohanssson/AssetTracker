@@ -181,7 +181,21 @@ namespace Server
 
             var count = query.Count();
 
-            query = query.Take(10);
+            if (filter.Take != null)
+            {
+                if (filter.Take < 100)
+                {
+                    query = query.Take(filter.Take.Value);
+                }
+                else
+                {
+                    query = query.Take(100);
+                }
+            }
+            else
+            {
+                query = query.Take(100);
+            }
 
             var offices = query
                 .Include(office => office.Currency)

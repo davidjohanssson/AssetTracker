@@ -26,9 +26,59 @@ namespace Server
             var currencies = new Currency[]
             {
                 new Currency {
+                    Name = "American dollar", 
+                    Code = "USD",
+                    ExchangeRateRelativeToDollar = 1.00
+                },
+                new Currency {
+                    Name = "Brazilian real",
+                    Code = "BRL",
+                    ExchangeRateRelativeToDollar = 5.53
+                },
+                new Currency {
+                    Name = "Canadian dollar",
+                    Code = "CAD",
+                    ExchangeRateRelativeToDollar = 1.26
+                },
+                new Currency {
+                    Name = "Danish krone",
+                    Code = "DKK",
+                    ExchangeRateRelativeToDollar = 6.12
+                },
+                new Currency {
                     Name = "Euro",
                     Code = "EUR",
                     ExchangeRateRelativeToDollar = 0.82
+                },
+                new Currency {
+                    Name = "Indian rupee",
+                    Code = "INR",
+                    ExchangeRateRelativeToDollar = 73.08
+                },
+                new Currency {
+                    Name = "Japanese yen",
+                    Code = "JPY",
+                    ExchangeRateRelativeToDollar = 106.12
+                },
+                new Currency {
+                    Name = "Mexican peso",
+                    Code = "MXN",
+                    ExchangeRateRelativeToDollar = 20.82
+                },
+                new Currency {
+                    Name = "Polish zloty",
+                    Code = "PLN",
+                    ExchangeRateRelativeToDollar = 3.71
+                },
+                new Currency {
+                    Name = "Pound sterling",
+                    Code = "GBP",
+                    ExchangeRateRelativeToDollar = 0.72
+                },
+                new Currency {
+                    Name = "Russian ruble",
+                    Code = "RUB",
+                    ExchangeRateRelativeToDollar = 74.25
                 },
                 new Currency {
                     Name = "Swedish crown", 
@@ -36,10 +86,15 @@ namespace Server
                     ExchangeRateRelativeToDollar = 8.29
                 },
                 new Currency {
-                    Name = "American dollar", 
-                    Code = "USD",
-                    ExchangeRateRelativeToDollar = 1.00
+                    Name = "Swiss franc",
+                    Code = "CHF",
+                    ExchangeRateRelativeToDollar = 0.90
                 },
+                new Currency {
+                    Name = "Thai baht",
+                    Code = "THB",
+                    ExchangeRateRelativeToDollar = 30.27
+                }
             };
 
             foreach (var currency in currencies)
