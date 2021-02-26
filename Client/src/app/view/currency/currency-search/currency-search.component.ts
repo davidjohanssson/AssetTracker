@@ -25,7 +25,8 @@ export class CurrencySearchComponent implements OnInit {
 
   ngOnInit() {
     this.formGroup = this.formBuilder.group({
-      currencies: new FormControl(),
+      name: new FormControl(),
+      codes: new FormControl(),
     });
 
     this.onFormGroupChange();
@@ -45,11 +46,16 @@ export class CurrencySearchComponent implements OnInit {
   }
 
   async search() {
-    const currencyNames = this.formGroup.get('currencies').value as string[];
+    const name = this.formGroup.get('name').value as string;
+    const codes = this.formGroup.get('codes').value as string[];
     const currencyFilter = new CurrencyFilter();
 
-    if (currencyNames && currencyNames.length) {
-      currencyFilter.names = currencyNames;
+    if (name) {
+      currencyFilter.name = name;
+    }
+
+    if (codes && codes.length) {
+      currencyFilter.codes = codes;
     }
     
     this.currencyStore.loading$.next(true);

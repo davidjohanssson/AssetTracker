@@ -9,7 +9,8 @@ namespace Server
 
         // Currency
         public int[] CurrencyIds { get; set; }
-        public string[] CurrencyNames { get; set; }
+        public string CurrencyName { get; set; }
+        public string[] CurrencyCodes { get; set; }
         public Nullable<double> CurrencyExchangeRateRelativeToDollarMin { get; set; }
         public Nullable<double> CurrencyExchangeRateRelativeToDollarMax { get; set; }
     }

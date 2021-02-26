@@ -20,7 +20,7 @@ export class CurrencyTableComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.displayedColumns = ['currency'];
+    this.displayedColumns = ['name', 'code', 'exchangeRateRelativeToDollar'];
 
     this.currencyStore.loading$
       .pipe(untilDestroyed(this))

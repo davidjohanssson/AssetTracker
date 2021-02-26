@@ -38,14 +38,29 @@ namespace Server
                 return new BadRequestObjectResult("Name must not be null");
             }
 
-            if (dto.Name.Length < 3)
+            if (dto.Name.Length < 1)
             {
-                return new BadRequestObjectResult("Name must be 3 characters");
+                return new BadRequestObjectResult("Name must be atleast 1 character");
             }
 
-            if (dto.Name.Length > 3)
+            if (dto.Name.Length > 256)
             {
-                return new BadRequestObjectResult("Name must be 3 characters");
+                return new BadRequestObjectResult("Name must not be more than 256 characters");
+            }
+
+            if (dto.Code == null)
+            {
+                return new BadRequestObjectResult("Code must not be null");
+            }
+
+            if (dto.Code.Length < 3)
+            {
+                return new BadRequestObjectResult("Code must be 3 characters");
+            }
+
+            if (dto.Code.Length > 3)
+            {
+                return new BadRequestObjectResult("Code must be 3 characters");
             }
 
             if (double.IsNegative(dto.ExchangeRateRelativeToDollar))
@@ -79,14 +94,29 @@ namespace Server
                 return new BadRequestObjectResult("Name must not be null");
             }
 
-            if (dto.Name.Length < 3)
+            if (dto.Name.Length < 1)
             {
-                return new BadRequestObjectResult("Name must be 3 characters");
+                return new BadRequestObjectResult("Name must be atleast 1 character");
             }
 
-            if (dto.Name.Length > 3)
+            if (dto.Name.Length > 256)
             {
-                return new BadRequestObjectResult("Name must be 3 characters");
+                return new BadRequestObjectResult("Name must not be more than 256 characters");
+            }
+
+            if (dto.Code == null)
+            {
+                return new BadRequestObjectResult("Code must not be null");
+            }
+
+            if (dto.Code.Length < 3)
+            {
+                return new BadRequestObjectResult("Code must be 3 characters");
+            }
+
+            if (dto.Code.Length > 3)
+            {
+                return new BadRequestObjectResult("Code must be 3 characters");
             }
 
             if (double.IsNegative(dto.ExchangeRateRelativeToDollar))
@@ -133,9 +163,14 @@ namespace Server
                 query = query.Where(currency => filter.Ids.Contains(currency.Id));
             }
 
-            if (filter.Names != null)
+            if (filter.Name != null)
             {
-                query = query.Where(currency => filter.Names.Contains(currency.Name));
+                query = query.Where(currency => currency.Name.Contains(filter.Name));
+            }
+
+            if (filter.Codes != null)
+            {
+                query = query.Where(currency => filter.Codes.Contains(currency.Code));
             }
 
             if (filter.ExchangeRateRelativeToDollarMin != null)

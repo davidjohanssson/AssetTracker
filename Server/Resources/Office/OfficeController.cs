@@ -141,9 +141,14 @@ namespace Server
                 query = query.Where(office => filter.CurrencyIds.Contains(office.Currency.Id));
             }
 
-            if (filter.CurrencyNames != null)
+            if (filter.CurrencyName != null)
             {
-                query = query.Where(office => filter.CurrencyNames.Contains(office.Currency.Name));
+                query = query.Where(office => filter.CurrencyName.Contains(office.Currency.Name));
+            }
+
+            if (filter.CurrencyCodes != null)
+            {
+                query = query.Where(office => filter.CurrencyCodes.Contains(office.Currency.Code));
             }
 
             if (filter.CurrencyExchangeRateRelativeToDollarMin != null)

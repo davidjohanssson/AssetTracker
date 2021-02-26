@@ -1,9 +1,31 @@
 <mat-table class="currency__table mat-elevation-z3" [dataSource]="this">
-    <ng-container matColumnDef="currency">
-        <mat-header-cell *matHeaderCellDef>Currency</mat-header-cell>
+    <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
         <mat-cell *matCellDef="let currency">
             <ng-container *ngIf="currency; else noData">
                 {{ currency.name }}
+            </ng-container>
+            <ng-template #noData>
+                <app-skeleton *ngIf="loading" width="48" height="14"></app-skeleton>
+            </ng-template>
+        </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="code">
+        <mat-header-cell *matHeaderCellDef>Code</mat-header-cell>
+        <mat-cell *matCellDef="let currency">
+            <ng-container *ngIf="currency; else noData">
+                {{ currency.code }}
+            </ng-container>
+            <ng-template #noData>
+                <app-skeleton *ngIf="loading" width="48" height="14"></app-skeleton>
+            </ng-template>
+        </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="exchangeRateRelativeToDollar">
+        <mat-header-cell *matHeaderCellDef>Exchange Rate</mat-header-cell>
+        <mat-cell *matCellDef="let currency">
+            <ng-container *ngIf="currency; else noData">
+                {{ currency.exchangeRateRelativeToDollar }}
             </ng-container>
             <ng-template #noData>
                 <app-skeleton *ngIf="loading" width="48" height="14"></app-skeleton>

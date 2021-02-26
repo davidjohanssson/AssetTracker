@@ -1,12 +1,12 @@
 .currency__search {
     display: flex;
     flex-direction: column;
-    
 }
 
 .currency__search__fields {
     display: grid;
     grid-template-columns: 1fr;
+    column-gap: 16px;
     max-width: 1024px;
 }
 

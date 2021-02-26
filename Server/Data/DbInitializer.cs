@@ -25,16 +25,19 @@ namespace Server
 
             var currencies = new Currency[]
             {
-                new Currency { 
-                    Name = "EUR",
-                    ExchangeRateRelativeToDollar = 0.82 
+                new Currency {
+                    Name = "Euro",
+                    Code = "EUR",
+                    ExchangeRateRelativeToDollar = 0.82
                 },
-                new Currency { 
-                    Name = "SEK",
+                new Currency {
+                    Name = "Swedish crown", 
+                    Code = "SEK",
                     ExchangeRateRelativeToDollar = 8.29
                 },
-                new Currency { 
-                    Name = "USD",
+                new Currency {
+                    Name = "American dollar", 
+                    Code = "USD",
                     ExchangeRateRelativeToDollar = 1.00
                 },
             };
@@ -58,23 +61,23 @@ namespace Server
             {
                 new Office {
                     City = "Berlin",
-                    Currency = context.Currencies.Where(currency => currency.Name == "EUR").FirstOrDefault(),
+                    Currency = context.Currencies.Where(currency => currency.Code == "EUR").FirstOrDefault(),
                 },
                 new Office {
                     City = "Madrid",
-                    Currency = context.Currencies.Where(currency => currency.Name == "EUR").FirstOrDefault(),
+                    Currency = context.Currencies.Where(currency => currency.Code == "EUR").FirstOrDefault(),
                 },
                 new Office { 
                     City = "Stockholm",
-                    Currency = context.Currencies.Where(currency => currency.Name == "SEK").FirstOrDefault(),
+                    Currency = context.Currencies.Where(currency => currency.Code == "SEK").FirstOrDefault(),
                 },
                 new Office {
                     City = "Boston",
-                    Currency = context.Currencies.Where(currency => currency.Name == "USD").FirstOrDefault(),
+                    Currency = context.Currencies.Where(currency => currency.Code == "USD").FirstOrDefault(),
                 },
                 new Office {
                     City = "New York",
-                    Currency = context.Currencies.Where(currency => currency.Name == "USD").FirstOrDefault(),
+                    Currency = context.Currencies.Where(currency => currency.Code == "USD").FirstOrDefault(),
                 },
             };
 
