@@ -221,7 +221,7 @@ namespace Server
 
             var count = query.Count();
 
-            query = query.Take(20);
+            query = query.Take(10);
 
             var products = query
                 .Include(product => product.Brand)

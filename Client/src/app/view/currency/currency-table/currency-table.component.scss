@@ -1,0 +1,15 @@
+.currency__table {
+    margin-top: 32px;
+}
+
+.row {
+    cursor: pointer;
+}
+
+.row:hover {
+    background-color: var(--mat-gray-100);
+}
+
+.row-empty {
+    background-color: var(--mat-gray-100);
+}

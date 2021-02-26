@@ -173,7 +173,7 @@ namespace Server
 
             var count = query.Count();
 
-            query = query.Take(20);
+            query = query.Take(10);
 
             var offices = query
                 .Include(office => office.Currency)

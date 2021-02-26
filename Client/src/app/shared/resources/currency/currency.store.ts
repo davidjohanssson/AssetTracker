@@ -6,5 +6,6 @@ import { Currency } from "./currency";
     providedIn: 'root'
 })
 export class CurrencyStore {
-    latestSearch$ = new BehaviorSubject<[Currency[], number]>(null);
+    latestSearch$ = new BehaviorSubject<[Currency[], number]>([[], 0]);
+    loading$ = new BehaviorSubject<boolean>(true);
 }

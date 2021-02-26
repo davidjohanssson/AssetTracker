@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from './shared/modules/material.module';
+import { MaterialModule } from './shared/modules/material/material.module';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ViewComponent } from './view/view.component';
@@ -12,6 +12,8 @@ import { ProductComponent } from './view/product/product.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CurrencyComponent } from './view/currency/currency.component';
 import { CurrencySearchComponent } from './view/currency/currency-search/currency-search.component';
+import { CurrencyTableComponent } from './view/currency/currency-table/currency-table.component';
+import { SkeletonModule } from './shared/modules/skeleton/skeleton.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { CurrencySearchComponent } from './view/currency/currency-search/currenc
     AssetComponent,
     ProductComponent,
     CurrencyComponent,
-    CurrencySearchComponent
+    CurrencySearchComponent,
+    CurrencyTableComponent
   ],
   imports: [
     BrowserModule,
@@ -29,6 +32,7 @@ import { CurrencySearchComponent } from './view/currency/currency-search/currenc
     MaterialModule,
     ReactiveFormsModule,
     HttpClientModule,
+    SkeletonModule,
   ],
   providers: [
     {

@@ -30,6 +30,7 @@ export class CurrencySearchComponent implements OnInit {
 
     this.onFormGroupChange();
     this.getCurrencies();
+    this.search();
   }
 
   async onFormGroupChange() {
@@ -51,8 +52,10 @@ export class CurrencySearchComponent implements OnInit {
       currencyFilter.names = currencyNames;
     }
     
-    this.currencyStore.latestSearch$.next(null);
+    this.currencyStore.loading$.next(true);
+    this.currencyStore.latestSearch$.next([[], 0]);
     const filtered = await this.currencyHttp.filter(currencyFilter);
+    this.currencyStore.loading$.next(false);
     this.currencyStore.latestSearch$.next(filtered);
   }
 }
