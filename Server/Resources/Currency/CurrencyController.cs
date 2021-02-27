@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -185,12 +186,12 @@ namespace Server
 
             if (filter.OrderByAsc != null)
             {
-                query = query.OrderBy(filter.OrderByAsc);
+                query = query.OrderBy(Helper.CapitalizeFirstLetter(filter.OrderByAsc));
             }
 
             if (filter.OrderByDesc != null)
             {
-                query = query.OrderByDescending(filter.OrderByDesc);
+                query = query.OrderByDescending(Helper.CapitalizeFirstLetter(filter.OrderByDesc));
             }
 
             if (filter.Skip != null)

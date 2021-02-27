@@ -8,6 +8,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatTableModule } from '@angular/material/table';
 import { MatRippleModule } from '@angular/material/core';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
     imports: [
@@ -20,6 +21,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
         MatTableModule,
         MatRippleModule,
         MatPaginatorModule,
+        MatSortModule,
     ],
     exports: [
         MatButtonModule,
@@ -31,6 +33,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
         MatTableModule,
         MatRippleModule,
         MatPaginatorModule,
+        MatSortModule,
     ]
 })
 export class MaterialModule { }

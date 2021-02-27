@@ -1,6 +1,6 @@
-<mat-table [dataSource]="this">
+<mat-table [dataSource]="this" matSort (matSortChange)="sortData($event)">
     <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
         <mat-cell *matCellDef="let currency">
             <ng-container *ngIf="currency; else noData">
                 {{ currency.name }}
@@ -11,7 +11,7 @@
         </mat-cell>
     </ng-container>
     <ng-container matColumnDef="code">
-        <mat-header-cell *matHeaderCellDef>Code</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Code</mat-header-cell>
         <mat-cell *matCellDef="let currency">
             <ng-container *ngIf="currency; else noData">
                 {{ currency.code }}
@@ -22,7 +22,7 @@
         </mat-cell>
     </ng-container>
     <ng-container matColumnDef="exchangeRateRelativeToDollar">
-        <mat-header-cell *matHeaderCellDef>Exchange Rate</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Exchange Rate</mat-header-cell>
         <mat-cell *matCellDef="let currency">
             <ng-container *ngIf="currency; else noData">
                 {{ currency.exchangeRateRelativeToDollar }}

@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatSort, Sort } from '@angular/material/sort';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -15,6 +16,8 @@ import { CurrencyState } from 'src/app/shared/resources/currency/currency.state'
 })
 export class CurrencyTableComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
   count: number = 0;
   loading: boolean;
   displayedColumns: string[];
@@ -62,10 +65,6 @@ export class CurrencyTableComponent implements OnInit, AfterViewInit {
     }
   }
 
-  async openCurrencyDialog() {
-
-  }
-
   ngAfterViewInit() {
     this.currencyState.paginator = this.paginator;
     this.currencyState.paginator.page
@@ -78,5 +77,23 @@ export class CurrencyTableComponent implements OnInit, AfterViewInit {
           await this.currencyHttp.search(filter);
         }
       );
+  }
+
+  async sortData(sort: Sort) {
+    const filter = this.currencyState.filter$.getValue();
+    delete filter.orderByAsc;
+    delete filter.orderByDesc;
+    
+    if (sort.direction === 'asc') {
+      filter.orderByAsc = sort.active;
+    } else {
+      filter.orderByDesc = sort.active;
+    }
+
+    await this.currencyHttp.search(filter);
+  }
+
+  async openCurrencyDialog() {
+
   }
 }
