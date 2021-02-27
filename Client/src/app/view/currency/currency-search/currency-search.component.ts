@@ -37,7 +37,10 @@ export class CurrencySearchComponent implements OnInit {
   async onFormGroupChange() {
     this.formGroup.valueChanges
       .pipe(untilDestroyed(this), debounceTime(125))
-      .subscribe(() => this.search());
+      .subscribe(() => {
+        this.search();
+        this.currencyState.paginator.firstPage();
+      });
   }
 
   async getCurrencies() {

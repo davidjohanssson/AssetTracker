@@ -67,7 +67,8 @@ export class CurrencyTableComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.paginator.page
+    this.currencyState.paginator = this.paginator;
+    this.currencyState.paginator.page
       .pipe(untilDestroyed(this))
       .subscribe(
         async (pageEvent: PageEvent) => {
