@@ -154,8 +154,8 @@ namespace Server
             return new OkResult();
         }
 
-        [HttpPost("filter")]
-        public IActionResult Filter(CurrencyFilter filter)
+        [HttpPost("search")]
+        public IActionResult Search(CurrencyFilter filter)
         {
             var query = _context.Currencies.AsQueryable();
 

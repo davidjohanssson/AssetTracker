@@ -121,8 +121,8 @@ namespace Server
             return new OkResult();
         }
 
-        [HttpPost("filter")]
-        public IActionResult Filter(OfficeFilter filter)
+        [HttpPost("search")]
+        public IActionResult Search(OfficeFilter filter)
         {
             var query = _context.Offices.AsQueryable();
 

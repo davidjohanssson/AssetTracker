@@ -21,7 +21,7 @@ export class CurrencyHttp {
         this.currencyState.loading$.next(true);
         this.currencyState.store$.next([[], 0]);
         this.currencyState.filter$.next(filter);
-        const filtered = await this.http.post<[Currency[], number]>(`${environment.api.baseUrl}/currency/filter`, filter ?? {}).toPromise();
+        const filtered = await this.http.post<[Currency[], number]>(`${environment.api.baseUrl}/currency/search`, filter ?? {}).toPromise();
         this.currencyState.store$.next(filtered);
         this.currencyState.loading$.next(false);
         return filtered;

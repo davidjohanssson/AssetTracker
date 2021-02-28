@@ -159,8 +159,8 @@ namespace Server
             return new OkResult();
         }
 
-        [HttpPost("filter")]
-        public IActionResult Filter(ProductFilter filter)
+        [HttpPost("search")]
+        public IActionResult Search(ProductFilter filter)
         {
             var query = _context.Products.AsQueryable();
 

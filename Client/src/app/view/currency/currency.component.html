@@ -1,7 +1,7 @@
 <div class="currency">
     <div class="currency__header">
         <h1 class="currency__header__title">Currencies</h1>
-        <button mat-raised-button color="primary">Add</button>
+        <button mat-raised-button color="primary" (click)="openAddCurrencyDialog()">Add</button>
     </div>
     <mat-divider class="currency__divider"></mat-divider>
     <app-currency-search></app-currency-search>

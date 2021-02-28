@@ -129,8 +129,8 @@ namespace Server
             return new OkResult();
         }
 
-        [HttpPost("filter")]
-        public IActionResult Filter(AssetFilter filter)
+        [HttpPost("search")]
+        public IActionResult Search(AssetFilter filter)
         {
             var query = _context.Assets.AsQueryable();
 

@@ -103,8 +103,8 @@ namespace Server
             return new OkResult();
         }
 
-        [HttpPost("filter")]
-        public IActionResult Filter(FormFactorFilter filter)
+        [HttpPost("search")]
+        public IActionResult Search(FormFactorFilter filter)
         {
             var query = _context.FormFactors.AsQueryable();
 

@@ -17,7 +17,6 @@ import { CurrencyState } from 'src/app/shared/resources/currency/currency.state'
 export class CurrencyTableComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-
   count: number = 0;
   loading: boolean;
   displayedColumns: string[];
@@ -57,14 +56,6 @@ export class CurrencyTableComponent implements OnInit, AfterViewInit {
 
   disconnect(): void {}
 
-  getRowClass(row: Currency) {
-    if (row) {
-      return 'row';
-    } else if (!row && !this.loading) {
-      return 'row-empty';
-    }
-  }
-
   ngAfterViewInit() {
     this.currencyState.paginator = this.paginator;
     this.currencyState.paginator.page
@@ -91,6 +82,14 @@ export class CurrencyTableComponent implements OnInit, AfterViewInit {
     }
 
     await this.currencyHttp.search(filter);
+  }
+
+  getRowClass(row: Currency) {
+    if (row) {
+      return 'row';
+    } else if (!row && !this.loading) {
+      return 'row-empty';
+    }
   }
 
   async openCurrencyDialog() {

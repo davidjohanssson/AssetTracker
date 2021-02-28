@@ -101,8 +101,8 @@ namespace Server
             return new OkResult();
         }
 
-        [HttpPost("filter")]
-        public IActionResult Filter(BrandFilter filter)
+        [HttpPost("search")]
+        public IActionResult Search(BrandFilter filter)
         {
             var query = _context.Brands.AsQueryable();
 
