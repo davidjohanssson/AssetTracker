@@ -1,0 +1,18 @@
+.asset__search {
+    display: flex;
+    flex-direction: column;
+}
+
+.asset__search__fields {
+    display: grid;
+    grid-template-columns: 1fr;
+    column-gap: 16px;
+    max-width: 1024px;
+}
+
+// Small
+@media only screen and (min-width: 600px) {
+    .asset__search__fields {
+        grid-template-columns: 1fr 1fr;
+    }
+}

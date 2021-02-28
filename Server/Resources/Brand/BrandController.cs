@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Server
 {
+    [ApiController]
+    [Route("[controller]")]
     public class BrandController : ControllerBase
     {
         private AssetTrackerContext _context;

@@ -1,1 +1,49 @@
-<p>asset-search works!</p>
+<form class="asset__search" [formGroup]="assetForm">
+    <div class="asset__search__fields">
+        <mat-form-field>
+            <mat-label>Brands</mat-label>
+            <mat-select formControlName="brandNames" multiple>
+                <mat-option *ngFor="let brand of brandsAndCount[0]" [value]="brand.name">
+                    {{ brand.name }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Products</mat-label>
+            <mat-select formControlName="productNames" multiple>
+                <mat-option *ngFor="let product of productsAndCount[0]" [value]="product.name">
+                    {{ product.name }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Form Factors</mat-label>
+            <mat-select formControlName="formFactorNames" multiple>
+                <mat-option *ngFor="let formFactor of formFactorsAndCount[0]" [value]="formFactor.name">
+                    {{ formFactor.name }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Offices</mat-label>
+            <mat-select formControlName="officeCities" multiple>
+                <mat-option *ngFor="let office of officesAndCount[0]" [value]="office.city">
+                    {{ office.city }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Purchase Date</mat-label>
+            <mat-date-range-input [rangePicker]="picker">
+                <input formControlName="purchaseDateMin" matStartDate placeholder="Start date">
+                <input formControlName="purchaseDateMax" matEndDate placeholder="End date">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker touchUi #picker startView="year" [startAt]="dateRangePickerStartDate">
+            </mat-date-range-picker>
+        </mat-form-field>
+    </div>
+    <div class="asset__search__buttons">
+        <button mat-raised-button type="reset" color="accent">Reset</button>
+    </div>
+</form>
