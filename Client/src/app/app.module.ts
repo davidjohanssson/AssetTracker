@@ -15,6 +15,8 @@ import { CurrencySearchComponent } from './view/currency/currency-search/currenc
 import { CurrencyTableComponent } from './view/currency/currency-table/currency-table.component';
 import { SkeletonModule } from './shared/modules/skeleton/skeleton.module';
 import { AddCurrencyComponent } from './view/currency/dialogs/add-currency/add-currency.component';
+import { AssetSearchComponent } from './view/asset/asset-search/asset-search.component';
+import { AssetTableComponent } from './view/asset/asset-table/asset-table.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { AddCurrencyComponent } from './view/currency/dialogs/add-currency/add-c
     CurrencyComponent,
     CurrencySearchComponent,
     CurrencyTableComponent,
-    AddCurrencyComponent
+    AddCurrencyComponent,
+    AssetSearchComponent,
+    AssetTableComponent
   ],
   imports: [
     BrowserModule,

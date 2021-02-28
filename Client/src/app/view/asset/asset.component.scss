@@ -1,0 +1,21 @@
+.asset {
+    display: flex;
+    flex-direction: column;
+}
+
+.asset__header {
+    display: flex;
+    align-items: center;
+}
+
+.asset__header__title {
+    margin: 0;
+    margin-right: 16px;
+    font-size: 28px;
+    font-weight: 300;
+}
+
+.asset__divider {
+    margin-top: 16px;
+    margin-bottom: 16px;
+}

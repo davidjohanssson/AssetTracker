@@ -6,4 +6,5 @@ import { Subject } from "rxjs";
 })
 export class ResourceChange {
     currencies$ = new Subject<void>();
+    assets$ = new Subject<void>();
 }
