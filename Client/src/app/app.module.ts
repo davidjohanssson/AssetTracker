@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,6 +16,8 @@ import { SkeletonModule } from './shared/modules/skeleton/skeleton.module';
 import { AddCurrencyComponent } from './view/currency/dialogs/add-currency/add-currency.component';
 import { AssetSearchComponent } from './view/asset/asset-search/asset-search.component';
 import { AssetTableComponent } from './view/asset/asset-table/asset-table.component';
+import { registerLocaleData } from '@angular/common';
+import localeSv from '@angular/common/locales/sv';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,16 @@ import { AssetTableComponent } from './view/asset/asset-table/asset-table.compon
     HttpClientModule,
     SkeletonModule,
   ],
+  providers: [
+    {
+      provide: LOCALE_ID,
+      useValue: 'sv-SE'
+    },
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor() {
+    registerLocaleData(localeSv);
+  }
+}

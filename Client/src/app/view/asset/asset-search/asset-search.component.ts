@@ -60,7 +60,7 @@ export class AssetSearchComponent implements OnInit {
     this.assetForm.valueChanges
       .pipe(untilDestroyed(this), debounceTime(125))
       .subscribe(() => {
-        //this.assetState.paginator.firstPage();
+        this.assetState.paginator.firstPage();
         this.search();
       });
   }
@@ -101,6 +101,8 @@ export class AssetSearchComponent implements OnInit {
     const productNames = this.assetForm.get('productNames').value as string[];
     const formFactorNames = this.assetForm.get('formFactorNames').value as string[];
     const officeCities = this.assetForm.get('officeCities').value as string[];
+    const purchaseDateMin = this.assetForm.get('purchaseDateMin').value as Date;
+    const purchaseDateMax = this.assetForm.get('purchaseDateMax').value as Date;
 
     const assetFilter = new AssetFilter();
 
@@ -118,6 +120,14 @@ export class AssetSearchComponent implements OnInit {
 
     if (officeCities && officeCities.length) {
       assetFilter.officeFilter.cities = officeCities;
+    }
+
+    if (purchaseDateMin) {
+      assetFilter.purchaseDateMin = purchaseDateMin;
+    }
+
+    if (purchaseDateMax) {
+      assetFilter.purchaseDateMax = purchaseDateMax;
     }
 
     await this.assetHttp.search(assetFilter);

@@ -1,1 +1,71 @@
-<p>asset-table works!</p>
+<mat-table [dataSource]="this" matSort (matSortChange)="sortData($event)">
+    <ng-container matColumnDef="brand">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Brand</mat-header-cell>
+        <mat-cell *matCellDef="let asset">
+            <ng-container *ngIf="asset; else noData">
+                {{ asset.product.brand.name }}
+            </ng-container>
+            <ng-template #noData>
+                <app-skeleton *ngIf="loading" width="48" height="14"></app-skeleton>
+            </ng-template>
+        </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="product">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Product</mat-header-cell>
+        <mat-cell *matCellDef="let asset">
+            <ng-container *ngIf="asset; else noData">
+                {{ asset.product.name }}
+            </ng-container>
+            <ng-template #noData>
+                <app-skeleton *ngIf="loading" width="48" height="14"></app-skeleton>
+            </ng-template>
+        </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="formFactor">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Form Factor</mat-header-cell>
+        <mat-cell *matCellDef="let asset">
+            <ng-container *ngIf="asset; else noData">
+                {{ asset.product.formFactor.name }}
+            </ng-container>
+            <ng-template #noData>
+                <app-skeleton *ngIf="loading" width="48" height="14"></app-skeleton>
+            </ng-template>
+        </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="office">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Office</mat-header-cell>
+        <mat-cell *matCellDef="let asset">
+            <ng-container *ngIf="asset; else noData">
+                {{ asset.office.city }}
+            </ng-container>
+            <ng-template #noData>
+                <app-skeleton *ngIf="loading" width="48" height="14"></app-skeleton>
+            </ng-template>
+        </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="purchaseDate">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Purchase Date</mat-header-cell>
+        <mat-cell *matCellDef="let asset">
+            <ng-container *ngIf="asset; else noData">
+                {{ asset.purchaseDate | date:'shortDate' }}
+            </ng-container>
+            <ng-template #noData>
+                <app-skeleton *ngIf="loading" width="48" height="14"></app-skeleton>
+            </ng-template>
+        </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="price">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Price {{ currency ? currency.code : '' }}</mat-header-cell>
+        <mat-cell *matCellDef="let asset">
+            <ng-container *ngIf="asset; else noData">
+                {{ asset.product.price * currency.exchangeRateRelativeToDollar | number:'1.0-0' }}
+            </ng-container>
+            <ng-template #noData>
+                <app-skeleton *ngIf="loading" width="48" height="14"></app-skeleton>
+            </ng-template>
+        </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row matRipple *matRowDef="let row; columns: displayedColumns; let i = index" [class]="getRowClass(row)" (click)="openAssetDialog(row)"></mat-row>
+</mat-table>
+<mat-paginator #paginator [length]="count" [pageSize]="10"></mat-paginator>

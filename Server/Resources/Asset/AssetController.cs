@@ -213,12 +213,68 @@ namespace Server
 
             if (filter.OrderByAsc != null)
             {
-                query = query.OrderBy(Helper.CapitalizeFirstLetter(filter.OrderByAsc));
+                if (Helper.CapitalizeFirstLetter(filter.OrderByAsc) == "Brand")
+                {
+                    query = query.OrderBy(asset => asset.Product.Brand.Name);
+                }
+
+                if (Helper.CapitalizeFirstLetter(filter.OrderByAsc) == "Product")
+                {
+                    query = query.OrderBy(asset => asset.Product.Name);
+                }
+
+                if (Helper.CapitalizeFirstLetter(filter.OrderByAsc) == "FormFactor")
+                {
+                    query = query.OrderBy(asset => asset.Product.FormFactor.Name);
+                }
+
+                if (Helper.CapitalizeFirstLetter(filter.OrderByAsc) == "Office")
+                {
+                    query = query.OrderBy(asset => asset.Office.City);
+                }
+
+                if (Helper.CapitalizeFirstLetter(filter.OrderByAsc) == "PurchaseDate")
+                {
+                    query = query.OrderBy(asset => asset.PurchaseDate);
+                }
+
+                if (Helper.CapitalizeFirstLetter(filter.OrderByAsc) == "Price")
+                {
+                    query = query.OrderBy(asset => asset.Product.Price);
+                }
             }
 
             if (filter.OrderByDesc != null)
             {
-                query = query.OrderByDescending(Helper.CapitalizeFirstLetter(filter.OrderByDesc));
+                if (Helper.CapitalizeFirstLetter(filter.OrderByDesc) == "Brand")
+                {
+                    query = query.OrderByDescending(asset => asset.Product.Brand.Name);
+                }
+
+                if (Helper.CapitalizeFirstLetter(filter.OrderByDesc) == "Product")
+                {
+                    query = query.OrderByDescending(asset => asset.Product.Name);
+                }
+
+                if (Helper.CapitalizeFirstLetter(filter.OrderByDesc) == "FormFactor")
+                {
+                    query = query.OrderByDescending(asset => asset.Product.FormFactor.Name);
+                }
+
+                if (Helper.CapitalizeFirstLetter(filter.OrderByDesc) == "Office")
+                {
+                    query = query.OrderByDescending(asset => asset.Office.City);
+                }
+
+                if (Helper.CapitalizeFirstLetter(filter.OrderByDesc) == "PurchaseDate")
+                {
+                    query = query.OrderByDescending(asset => asset.PurchaseDate);
+                }
+
+                if (Helper.CapitalizeFirstLetter(filter.OrderByDesc) == "Price")
+                {
+                    query = query.OrderByDescending(asset => asset.Product.Price);
+                }
             }
 
             if (filter.Skip != null)

@@ -12,4 +12,5 @@ export class CurrencyState {
     loading$ = new BehaviorSubject<boolean>(true);
     filter$ = new BehaviorSubject<CurrencyFilter>(null);
     paginator: MatPaginator;
+    selectedCurrency$ = new BehaviorSubject<Currency>(null);
 }

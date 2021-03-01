@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Currency } from '../shared/resources/currency/currency';
 import { CurrencyHttp } from '../shared/resources/currency/currency.http';
+import { CurrencyState } from '../shared/resources/currency/currency.state';
 
 @Component({
   selector: 'app-view',
@@ -12,6 +13,7 @@ export class ViewComponent implements OnInit {
 
   constructor(
     private currencyHttp: CurrencyHttp,
+    private currencyState: CurrencyState,
   ) { }
 
   async ngOnInit() {
@@ -19,11 +21,13 @@ export class ViewComponent implements OnInit {
     this.currencies = filtered[0];
 
     // Default to USD if currency is not set
-    const currency = localStorage.getItem('currency');
+    const currency = JSON.parse(localStorage.getItem('currency')) as Currency;
     if (currency == null) {
       const usd = this.currencies.find(currency => currency.name === 'USD');
-      localStorage.setItem('currency', JSON.stringify(usd));
-    } 
+      this.setCurrency(usd);
+    } else {
+      this.currencyState.selectedCurrency$.next(currency);
+    }
   }
 
   getCurrency() {
@@ -32,5 +36,6 @@ export class ViewComponent implements OnInit {
 
   setCurrency(currency: Currency) {
     localStorage.setItem('currency', JSON.stringify(currency));
+    this.currencyState.selectedCurrency$.next(currency);
   }
 }

@@ -1,0 +1,11 @@
+:host {
+    margin-top: 32px;
+}
+
+.row {
+    cursor: pointer;
+}
+
+.row-empty {
+    background-color: var(--mat-gray-100);
+}
