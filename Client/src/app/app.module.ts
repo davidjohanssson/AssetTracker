@@ -18,6 +18,7 @@ import { AssetSearchComponent } from './view/asset/asset-search/asset-search.com
 import { AssetTableComponent } from './view/asset/asset-table/asset-table.component';
 import { registerLocaleData } from '@angular/common';
 import localeSv from '@angular/common/locales/sv';
+import { AddAssetComponent } from './view/asset/dialogs/add-asset/add-asset.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import localeSv from '@angular/common/locales/sv';
     CurrencyTableComponent,
     AddCurrencyComponent,
     AssetSearchComponent,
-    AssetTableComponent
+    AssetTableComponent,
+    AddAssetComponent
   ],
   imports: [
     BrowserModule,
