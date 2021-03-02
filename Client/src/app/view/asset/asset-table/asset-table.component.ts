@@ -1,4 +1,3 @@
-import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
@@ -22,7 +21,6 @@ import { EditAssetComponent } from '../dialogs/edit-asset/edit-asset.component';
 })
 export class AssetTableComponent implements OnInit, AfterViewInit {
   currency: Currency;
-  XSmall: boolean;
   displayedColumns: string[];
   loading: boolean;
   count: number = 0;
@@ -31,7 +29,6 @@ export class AssetTableComponent implements OnInit, AfterViewInit {
 
   constructor(
     private currencyState: CurrencyState,
-    private breakpointObserver: BreakpointObserver,
     private assetState: AssetState,
     private assetHttp: AssetHttp,
     private resourceChange: ResourceChange,
@@ -47,27 +44,14 @@ export class AssetTableComponent implements OnInit, AfterViewInit {
         }
       );
 
-    this.breakpointObserver
-      .observe(Breakpoints.XSmall)
-      .pipe(untilDestroyed(this))
-      .subscribe(
-        (result: BreakpointState) => {
-          if (result.matches) {
-            this.XSmall = true;
-
-          } else {
-            this.XSmall = false;
-            this.displayedColumns = [
-              'brand',
-              'product',
-              'formFactor',
-              'office',
-              'purchaseDate',
-              'price',
-            ];
-          }
-        }
-      );
+    this.displayedColumns = [
+      'brand',
+      'product',
+      'formFactor',
+      'office',
+      'purchaseDate',
+      'price',
+    ];
 
     this.assetState.loading$
       .pipe(untilDestroyed(this))
@@ -153,7 +137,7 @@ export class AssetTableComponent implements OnInit, AfterViewInit {
       dialogConfig.maxWidth = '90vw';
       dialogConfig.maxHeight = '90vh';
       dialogConfig.data = asset;
-  
+
       this.editAssetDialog.open(EditAssetComponent, dialogConfig);
     }
   }
