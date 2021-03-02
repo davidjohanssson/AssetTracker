@@ -26,4 +26,10 @@ export class AssetHttp {
         this.assetState.loading$.next(false);
         return filtered;
     }
+
+    async create(dto: Asset) {
+        const asset = await this.http.post<Asset>(`${environment.api.baseUrl}/asset`, dto).toPromise();
+        this.resourceChange.assets$.next();
+        return asset;
+    }
 }

@@ -19,7 +19,7 @@
         </mat-form-field>
         <mat-form-field>
             <mat-label>Office</mat-label>
-            <mat-select formControlName="officeName" required>
+            <mat-select formControlName="officeCity" required>
                 <mat-option *ngFor="let office of officesAndCount[0]" [value]="office.city">
                     {{ office.city }}
                 </mat-option>

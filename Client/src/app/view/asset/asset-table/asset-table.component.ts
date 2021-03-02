@@ -10,6 +10,7 @@ import { AssetHttp } from 'src/app/shared/resources/asset/asset.http';
 import { AssetState } from 'src/app/shared/resources/asset/asset.state';
 import { Currency } from 'src/app/shared/resources/currency/currency';
 import { CurrencyState } from 'src/app/shared/resources/currency/currency.state';
+import { ResourceChange } from 'src/app/shared/resources/resource.change';
 
 @UntilDestroy()
 @Component({
@@ -31,6 +32,7 @@ export class AssetTableComponent implements OnInit, AfterViewInit {
     private breakpointObserver: BreakpointObserver,
     private assetState: AssetState,
     private assetHttp: AssetHttp,
+    private resourceChange: ResourceChange,
   ) { }
 
   ngOnInit(): void {
@@ -67,6 +69,20 @@ export class AssetTableComponent implements OnInit, AfterViewInit {
     this.assetState.loading$
       .pipe(untilDestroyed(this))
       .subscribe((loading: boolean) => this.loading = loading);
+
+    this.onAssetChange();
+  }
+
+  onAssetChange() {
+    this.resourceChange.assets$
+      .pipe(untilDestroyed(this))
+      .subscribe(
+        async () => {
+          this.assetState.paginator.firstPage();
+          const filter = this.assetState.filter$.getValue();
+          await this.assetHttp.search(filter);
+        }
+      );
   }
 
   connect(): Observable<Asset[]> {

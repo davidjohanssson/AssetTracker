@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { Asset } from 'src/app/shared/resources/asset/asset';
+import { AssetHttp } from 'src/app/shared/resources/asset/asset.http';
 import { Brand } from 'src/app/shared/resources/brand/brand';
 import { BrandHttp } from 'src/app/shared/resources/brand/brand.http';
 import { Office } from 'src/app/shared/resources/office/office';
@@ -29,13 +31,14 @@ export class AddAssetComponent implements OnInit {
     private brandHttp: BrandHttp,
     private productHttp: ProductHttp,
     private officeHttp: OfficeHttp,
+    private assetHttp: AssetHttp,
   ) { }
 
   ngOnInit(): void {
     this.addAssetForm = new FormGroup({
       brandName: new FormControl([Validators.required]),
       productName: new FormControl({ value: null, disabled: true }, [Validators.required]),
-      officeName: new FormControl([Validators.required]),
+      officeCity: new FormControl([Validators.required]),
       purchaseDate: new FormControl([Validators.required]),
     });
 
@@ -68,8 +71,26 @@ export class AddAssetComponent implements OnInit {
     this.officesAndCount = await this.officeHttp.search({ take: Number.MAX_SAFE_INTEGER });
   }
 
-  submit() {
+  async submit() {
     this.submitting = true;
+
+    const productName = this.addAssetForm.get('productName').value as string;
+    const officeCity = this.addAssetForm.get('officeCity').value as string;
+    const purchaseDate = this.addAssetForm.get('purchaseDate').value as Date;
+
+    const dto = new Asset();
+    dto.productId = this.productsAndCount[0].find(product => product.name === productName).id;
+    dto.officeId = this.officesAndCount[0].find(office => office.city === officeCity).id;
+    dto.purchaseDate = purchaseDate;
+
+    try {
+      await this.assetHttp.create(dto);
+      this.dialogRef.close();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      this.submitting = false;
+    }
   }
 
   close() {
