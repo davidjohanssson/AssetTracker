@@ -1,5 +1,6 @@
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -11,6 +12,7 @@ import { AssetState } from 'src/app/shared/resources/asset/asset.state';
 import { Currency } from 'src/app/shared/resources/currency/currency';
 import { CurrencyState } from 'src/app/shared/resources/currency/currency.state';
 import { ResourceChange } from 'src/app/shared/resources/resource.change';
+import { EditAssetComponent } from '../dialogs/edit-asset/edit-asset.component';
 
 @UntilDestroy()
 @Component({
@@ -33,6 +35,7 @@ export class AssetTableComponent implements OnInit, AfterViewInit {
     private assetState: AssetState,
     private assetHttp: AssetHttp,
     private resourceChange: ResourceChange,
+    private editAssetDialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -141,7 +144,17 @@ export class AssetTableComponent implements OnInit, AfterViewInit {
     }
   }
 
-  async openAssetDialog() {
-
+  async openEditAssetDialog(asset: Asset) {
+    if (asset) {
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.autoFocus = true;
+      dialogConfig.disableClose = true;
+      dialogConfig.width = '48rem';
+      dialogConfig.maxWidth = '90vw';
+      dialogConfig.maxHeight = '90vh';
+      dialogConfig.data = asset;
+  
+      this.editAssetDialog.open(EditAssetComponent, dialogConfig);
+    }
   }
 }

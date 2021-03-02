@@ -1,0 +1,36 @@
+.edit__asset {
+    display: flex;
+    flex-direction: column;
+}
+
+.edit__asset__fields {
+    display: grid;
+    grid-template-columns: 1fr;
+    column-gap: 16px;
+}
+
+.edit__asset__buttons {
+    display: flex;
+}
+
+.edit__asset__buttons__left {
+    width: 50%;
+    display: flex;
+}
+
+.edit__asset__buttons__right {
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.edit__asset__buttons__right > :last-child {
+    margin-left: 16px;
+}
+
+// Small
+@media only screen and (min-width: 600px) {
+    .edit__asset__fields {
+        grid-template-columns: 1fr 1fr;
+    }
+}

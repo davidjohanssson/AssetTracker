@@ -1,0 +1,51 @@
+<form class="edit__asset" [formGroup]="editAssetForm" (ngSubmit)="submit()">
+    <h1>Edit Asset</h1>
+    <div class="edit__asset__fields">
+        <mat-form-field>
+            <mat-label>Brand</mat-label>
+            <mat-select formControlName="brandName" required>
+                <mat-option *ngFor="let brand of brandsAndCount[0]" [value]="brand.name">
+                    {{ brand.name }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Product</mat-label>
+            <mat-select formControlName="productName" required>
+                <mat-option *ngFor="let product of productsAndCount[0]" [value]="product.name">
+                    {{ product.name }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Office</mat-label>
+            <mat-select formControlName="officeCity" required>
+                <mat-option *ngFor="let office of officesAndCount[0]" [value]="office.city">
+                    {{ office.city }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Purchase Date</mat-label>
+            <input matInput formControlName="purchaseDate" [min]="datePickerMinDate" [max]="datePickerMaxDate"
+                [matDatepicker]="datepicker" required readonly (click)="datepicker.open()">
+            <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+            <mat-datepicker touchUi #datepicker disabled="false"></mat-datepicker>
+        </mat-form-field>
+    </div>
+    <div class="edit__asset__buttons">
+        <div class="edit__asset__buttons__left">
+            <button mat-raised-button color="warn" (click)="delete()">
+                Delete
+            </button>
+        </div>
+        <div class="edit__asset__buttons__right">
+            <button mat-raised-button color="primary" type="submit" [disabled]="submitting || !editAssetForm.valid">
+                OK
+            </button>
+            <button mat-raised-button (click)="close()" type="reset">
+                Close
+            </button>
+        </div>
+    </div>
+</form>

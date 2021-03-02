@@ -32,4 +32,14 @@ export class AssetHttp {
         this.resourceChange.assets$.next();
         return asset;
     }
+
+    async update(id: number, dto: Asset) {
+        const asset = await this.http.put<Asset>(`${environment.api.baseUrl}/asset/${id}`, dto).toPromise();
+        this.resourceChange.assets$.next();
+        return asset;
+    }
+
+    async delete(id: number) {
+        await this.http.delete<void>(`${environment.api.baseUrl}/asset/${id}`).toPromise();
+    }
 }

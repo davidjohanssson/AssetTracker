@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Asset } from 'src/app/shared/resources/asset/asset';
 import { AssetHttp } from 'src/app/shared/resources/asset/asset.http';
@@ -13,12 +13,12 @@ import { ProductHttp } from 'src/app/shared/resources/product/product.http';
 
 @UntilDestroy()
 @Component({
-  selector: 'app-add-asset',
-  templateUrl: './add-asset.component.html',
-  styleUrls: ['./add-asset.component.scss']
+  selector: 'app-edit-asset',
+  templateUrl: './edit-asset.component.html',
+  styleUrls: ['./edit-asset.component.scss']
 })
-export class AddAssetComponent implements OnInit {
-  addAssetForm: FormGroup;
+export class EditAssetComponent implements OnInit {
+  editAssetForm: FormGroup;
   brandsAndCount: [Brand[], number] = [[], 0];
   productsAndCount: [Product[], number] = [[], 0];
   officesAndCount: [Office[], number] = [[], 0];
@@ -27,7 +27,8 @@ export class AddAssetComponent implements OnInit {
   submitting: boolean;
 
   constructor(
-    private dialogRef: MatDialogRef<AddAssetComponent>,
+    private dialogRef: MatDialogRef<EditAssetComponent>,
+    @Inject(MAT_DIALOG_DATA) public asset: Asset,
     private brandHttp: BrandHttp,
     private productHttp: ProductHttp,
     private officeHttp: OfficeHttp,
@@ -35,31 +36,38 @@ export class AddAssetComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.addAssetForm = new FormGroup({
+    this.editAssetForm = new FormGroup({
       brandName: new FormControl(Validators.required),
-      productName: new FormControl({ value: null, disabled: true }, Validators.required),
+      productName: new FormControl(Validators.required),
       officeCity: new FormControl(Validators.required),
       purchaseDate: new FormControl(Validators.required),
     });
 
+    this.editAssetForm.patchValue({
+      brandName: this.asset.product.brand.name,
+      productName: this.asset.product.name,
+      officeCity: this.asset.office.city,
+      purchaseDate: this.asset.purchaseDate,
+    });
+
     this.onBrandChange();
     this.getBrands();
+    this.getProducts();
     this.getOffices();
   }
 
   async onBrandChange() {
-    this.addAssetForm.get('brandName').valueChanges
+    this.editAssetForm.get('brandName').valueChanges
       .pipe(untilDestroyed(this))
       .subscribe(
         async (brandName: string) => {
-          this.addAssetForm.get('productName').reset();
+          this.editAssetForm.get('productName').reset();
           this.productsAndCount = await this.productHttp.search({
             brandFilter: {
               names: [brandName]
             },
             take: Number.MAX_SAFE_INTEGER,
           });
-          this.addAssetForm.get('productName').enable();
         }
       );
   }
@@ -68,16 +76,38 @@ export class AddAssetComponent implements OnInit {
     this.brandsAndCount = await this.brandHttp.search({ take: Number.MAX_SAFE_INTEGER });
   }
 
+  async getProducts() {
+    this.productsAndCount = await this.productHttp.search({
+      brandFilter: {
+        names: [this.asset.product.brand.name]
+      },
+      take: Number.MAX_SAFE_INTEGER,
+    });
+  }
+
   async getOffices() {
     this.officesAndCount = await this.officeHttp.search({ take: Number.MAX_SAFE_INTEGER });
+  }
+
+  async delete() {
+    this.submitting = true;
+
+    try {
+      await this.assetHttp.delete(this.asset.id);
+      this.dialogRef.close();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      this.submitting = false;
+    }
   }
 
   async submit() {
     this.submitting = true;
 
-    const productName = this.addAssetForm.get('productName').value as string;
-    const officeCity = this.addAssetForm.get('officeCity').value as string;
-    const purchaseDate = this.addAssetForm.get('purchaseDate').value as Date;
+    const productName = this.editAssetForm.get('productName').value as string;
+    const officeCity = this.editAssetForm.get('officeCity').value as string;
+    const purchaseDate = this.editAssetForm.get('purchaseDate').value as Date;
 
     const dto = new Asset();
     dto.productId = this.productsAndCount[0].find(product => product.name === productName).id;
@@ -85,7 +115,7 @@ export class AddAssetComponent implements OnInit {
     dto.purchaseDate = purchaseDate;
 
     try {
-      await this.assetHttp.create(dto);
+      await this.assetHttp.update(this.asset.id, dto);
       this.dialogRef.close();
     } catch (error) {
       console.log(error);
