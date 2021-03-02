@@ -185,6 +185,9 @@ namespace Server
             var brands = new Brand[]
             {
                 new Brand {
+                    Name = "Acer",
+                },
+                new Brand {
                     Name = "Apple",
                 },
                 new Brand {
@@ -216,8 +219,26 @@ namespace Server
             var products = new Product[]
             {
                 new Product {
-                    Name = "iPhone X",
+                    Name = "15-eq1801",
+                    Price = 390.50,
+                    Brand = context.Brands.Where(brand => brand.Name == "HP").FirstOrDefault(),
+                    FormFactor = context.FormFactors.Where(formFactor => formFactor.Name == "Laptop").FirstOrDefault(),
+                },
+                new Product {
+                    Name = "Aspire 3",
+                    Price = 655.00,
+                    Brand = context.Brands.Where(brand => brand.Name == "Acer").FirstOrDefault(),
+                    FormFactor = context.FormFactors.Where(formFactor => formFactor.Name == "Laptop").FirstOrDefault(),
+                },
+                new Product {
+                    Name = "iPhone 10",
                     Price = 630.00,
+                    Brand = context.Brands.Where(brand => brand.Name == "Apple").FirstOrDefault(),
+                    FormFactor = context.FormFactors.Where(formFactor => formFactor.Name == "Phone").FirstOrDefault(),
+                },
+                new Product {
+                    Name = "iPhone SE",
+                    Price = 420.00,
                     Brand = context.Brands.Where(brand => brand.Name == "Apple").FirstOrDefault(),
                     FormFactor = context.FormFactors.Where(formFactor => formFactor.Name == "Phone").FirstOrDefault(),
                 },
@@ -265,9 +286,24 @@ namespace Server
             var assets = new Asset[]
             {
                 new Asset {
-                    PurchaseDate = new DateTime(2017, 5, 11),
-                    Product = context.Products.Where(product => product.Name == "iPhone X").FirstOrDefault(),
+                    PurchaseDate = new DateTime(2020, 6, 23),
+                    Product = context.Products.Where(product => product.Name == "15-eq1801").FirstOrDefault(),
                     Office = context.Offices.Where(office => office.City == "Berlin").FirstOrDefault(),
+                },
+                new Asset {
+                    PurchaseDate = new DateTime(2017, 10, 10),
+                    Product = context.Products.Where(product => product.Name == "Aspire 3").FirstOrDefault(),
+                    Office = context.Offices.Where(office => office.City == "Boston").FirstOrDefault(),
+                },
+                new Asset {
+                    PurchaseDate = new DateTime(2017, 5, 11),
+                    Product = context.Products.Where(product => product.Name == "iPhone 10").FirstOrDefault(),
+                    Office = context.Offices.Where(office => office.City == "Berlin").FirstOrDefault(),
+                },
+                new Asset {
+                    PurchaseDate = new DateTime(2019, 2, 18),
+                    Product = context.Products.Where(product => product.Name == "iPhone SE").FirstOrDefault(),
+                    Office = context.Offices.Where(office => office.City == "Stockholm").FirstOrDefault(),
                 },
                 new Asset {
                     PurchaseDate = new DateTime(2018, 3, 12),

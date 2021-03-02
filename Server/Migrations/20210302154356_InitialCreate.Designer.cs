@@ -10,7 +10,7 @@ using Server;
 namespace Server.Migrations
 {
     [DbContext(typeof(AssetTrackerContext))]
-    [Migration("20210226145944_InitialCreate")]
+    [Migration("20210302154356_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

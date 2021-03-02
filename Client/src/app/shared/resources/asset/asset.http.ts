@@ -41,5 +41,6 @@ export class AssetHttp {
 
     async delete(id: number) {
         await this.http.delete<void>(`${environment.api.baseUrl}/asset/${id}`).toPromise();
+        this.resourceChange.assets$.next();
     }
 }

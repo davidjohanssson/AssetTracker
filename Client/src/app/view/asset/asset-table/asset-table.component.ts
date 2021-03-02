@@ -115,8 +115,6 @@ export class AssetTableComponent implements OnInit, AfterViewInit {
       filter.orderByDesc = sort.active;
     }
 
-    console.log(filter);
-
     await this.assetHttp.search(filter);
   }
 
