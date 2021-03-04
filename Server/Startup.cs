@@ -28,7 +28,7 @@ namespace Server
                     builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
                 });
                 options.AddPolicy(name: Production, builder => {
-                    builder.WithOrigins("https://divv.tech");
+                    builder.WithOrigins("https://example.com");
                 });
             });
 
