@@ -20,13 +20,13 @@ export class ViewComponent implements OnInit {
     const filtered = await this.currencyHttp.search({ take: Number.MAX_SAFE_INTEGER });
     this.currencies = filtered[0];
 
-    // Default to USD if currency is not set
-    const currency = JSON.parse(localStorage.getItem('currency')) as Currency;
-    if (currency == null) {
-      const usd = this.currencies.find(currency => currency.name === 'USD');
-      this.setCurrency(usd);
+    const savedCurrencyStringified = localStorage.getItem('currency');
+
+    if (savedCurrencyStringified) {
+      this.currencyState.selectedCurrency$.next(JSON.parse(savedCurrencyStringified));
     } else {
-      this.currencyState.selectedCurrency$.next(currency);
+      const usd = this.currencies.find(currency => currency.code === 'USD');
+      this.setCurrency(usd);
     }
   }
 
