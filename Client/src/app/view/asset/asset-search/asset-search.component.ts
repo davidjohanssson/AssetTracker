@@ -38,6 +38,7 @@ export class AssetSearchComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    // Creates a form group for the form controls
     this.assetForm = new FormGroup({
       brandNames: new FormControl(),
       productNames: new FormControl(),
@@ -56,20 +57,27 @@ export class AssetSearchComponent implements OnInit {
     this.search();
   }
 
+  // Listens for changes on the asset form
   async onAssetFormChange() {
     this.assetForm.valueChanges
+      // Subscribe until compontent is destroyed, only emit every other 125 ms
       .pipe(untilDestroyed(this), debounceTime(125))
       .subscribe(() => {
+        // Jump to first page on asset form change
         this.assetState.paginator.firstPage();
+        // Initiate a search on asset form change
         this.search();
       });
   }
 
+  // Listens form changes on the brand form control
   async onBrandChange() {
     this.assetForm.get('brandNames').valueChanges
+      // Subscribe until component is destroyed
       .pipe(untilDestroyed(this))
       .subscribe(
         async (brandNames: string[]) => {
+          // Get all products with the currently selected brand
           this.productsAndCount = await this.productHttp.search({
             brandFilter: {
               names: brandNames,
@@ -97,6 +105,7 @@ export class AssetSearchComponent implements OnInit {
   }
 
   async search() {
+    // Assign current values of the form controls to variables
     const brandNames = this.assetForm.get('brandNames').value as string[];
     const productNames = this.assetForm.get('productNames').value as string[];
     const formFactorNames = this.assetForm.get('formFactorNames').value as string[];
@@ -104,8 +113,10 @@ export class AssetSearchComponent implements OnInit {
     const purchaseDateMin = this.assetForm.get('purchaseDateMin').value as Date;
     const purchaseDateMax = this.assetForm.get('purchaseDateMax').value as Date;
 
+    // Create a filter instance form asset
     const assetFilter = new AssetFilter();
 
+    // Check if form control has value, if yes, assign to filter
     if (brandNames && brandNames.length) {
       assetFilter.productFilter.brandFilter.names = brandNames;
     }
@@ -130,6 +141,7 @@ export class AssetSearchComponent implements OnInit {
       assetFilter.purchaseDateMax = purchaseDateMax;
     }
 
+    // Initiate a search with provided filter values
     await this.assetHttp.search(assetFilter);
   }
 }

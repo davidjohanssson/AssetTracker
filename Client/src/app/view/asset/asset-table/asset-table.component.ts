@@ -36,6 +36,7 @@ export class AssetTableComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
+    // Listen for changes of currently selected currency
     this.currencyState.selectedCurrency$
       .pipe(untilDestroyed(this))
       .subscribe(
@@ -44,6 +45,7 @@ export class AssetTableComponent implements OnInit, AfterViewInit {
         }
       );
 
+    // Declare table columns
     this.displayedColumns = [
       'brand',
       'product',
@@ -53,31 +55,42 @@ export class AssetTableComponent implements OnInit, AfterViewInit {
       'price',
     ];
 
+    // Listen if assets are currently being loaded (request in-flight)
     this.assetState.loading$
       .pipe(untilDestroyed(this))
       .subscribe((loading: boolean) => this.loading = loading);
 
+    
     this.onAssetChange();
   }
 
+  // Listen for changes on any asset resource
+  // This emits if a POST, PUT or DELETE operation has been made on an Asset entity
   onAssetChange() {
     this.resourceChange.assets$
       .pipe(untilDestroyed(this))
       .subscribe(
         async () => {
+          // Jump back to first page if any change has been made to an Asset
           this.assetState.paginator.firstPage();
+          // Get the current search filter, we want to preserve user inputed filter
           const filter = this.assetState.filter$.getValue();
+          // Initiate a search with the preserved filter
           await this.assetHttp.search(filter);
         }
       );
   }
 
+  // Table source
   connect(): Observable<Asset[]> {
     return this.assetState.store$
       .pipe(
         map((assetsAndCount: [Asset[], number]) => {
+          // We map into the emission because we want to manipulate the data
           const [assets, count] = assetsAndCount;
+          // Set the count in instance
           this.count = count;
+          // If we receive less than 10 assets we want to fill the table with empty rows
           if (assets.length < 10) {
             const rowsToAdd = 10 - assets.length;
             const emptyRows = new Array<Asset>(rowsToAdd);
@@ -90,15 +103,23 @@ export class AssetTableComponent implements OnInit, AfterViewInit {
 
   disconnect(): void { }
 
+  // Hook that runs after rendering
   ngAfterViewInit() {
+    // Keep a reference to the paginator in AssetState
+    // This is because we need to call methods on it from other components
     this.assetState.paginator = this.paginator;
+    // Listen to page events
     this.assetState.paginator.page
       .pipe(untilDestroyed(this))
       .subscribe(
         async (pageEvent: PageEvent) => {
+          // Grab the current filter
           const filter = this.assetState.filter$.getValue();
+          // Calculate how many items to skip
           filter.skip = pageEvent.pageIndex * pageEvent.pageSize;
+          // Get how many items to take
           filter.take = pageEvent.pageSize;
+          // Initiate a search with currently selected filter
           await this.assetHttp.search(filter);
         }
       );
@@ -106,6 +127,7 @@ export class AssetTableComponent implements OnInit, AfterViewInit {
 
   async sortData(sort: Sort) {
     const filter = this.assetState.filter$.getValue();
+    // Delete any current orderBy filters before initiating a new
     delete filter.orderByAsc;
     delete filter.orderByDesc;
 
