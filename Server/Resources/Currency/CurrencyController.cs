@@ -186,12 +186,26 @@ namespace Server
 
             if (filter.OrderByAsc != null)
             {
-                query = query.OrderBy(filter.OrderByAsc.ToPascalCase());
+                try
+                {
+                    query = query.OrderBy(filter.OrderByAsc.ToPascalCase());
+                }
+                catch
+                {
+                    return new BadRequestObjectResult($"Unable to order by {filter.OrderByAsc}. Are you sure {filter.OrderByAsc} is a member of the resource?");
+                }
             }
 
             if (filter.OrderByDesc != null)
             {
-                query = query.OrderByDescending(filter.OrderByDesc.ToPascalCase());
+                try
+                {
+                    query = query.OrderByDescending(filter.OrderByDesc.ToPascalCase());
+                }
+                catch
+                {
+                    return new BadRequestObjectResult($"Unable to order by {filter.OrderByDesc}. Are you sure {filter.OrderByDesc} is a member of the resource?");
+                }
             }
 
             if (filter.Skip != null)
