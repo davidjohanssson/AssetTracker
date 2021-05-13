@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using CustomExtensions;
 
 namespace Server
 {
@@ -186,12 +187,12 @@ namespace Server
 
             if (filter.OrderByAsc != null)
             {
-                query = query.OrderBy(Helper.CapitalizeFirstLetter(filter.OrderByAsc));
+                query = query.OrderBy(filter.OrderByAsc.ToPascalCase());
             }
 
             if (filter.OrderByDesc != null)
             {
-                query = query.OrderByDescending(Helper.CapitalizeFirstLetter(filter.OrderByDesc));
+                query = query.OrderByDescending(filter.OrderByDesc.ToPascalCase());
             }
 
             if (filter.Skip != null)
