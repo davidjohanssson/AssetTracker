@@ -1,4 +1,4 @@
-namespace CustomExtensions
+namespace Server
 {
     public static class StringExtensions
     {
